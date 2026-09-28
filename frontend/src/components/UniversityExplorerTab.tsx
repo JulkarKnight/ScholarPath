@@ -60,12 +60,12 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
       <div className="sp-card p-6 space-y-5">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <Building2 className="w-5 h-5 text-[#0066FF]" />
-            <h2 className="text-[18px] font-semibold text-[#111827] tracking-[-0.01em]">
+            <Building2 className="w-5 h-5 text-[var(--color-brand)]" />
+            <h2 className="text-[18px] font-semibold text-[var(--color-text-primary)] tracking-[-0.01em]">
               University Explorer
             </h2>
           </div>
-          <p className="text-[13px] text-[#6B7280]">
+          <p className="text-[13px] text-[var(--color-text-secondary)]">
             বিশ্বজুড়ে শীর্ষ বিশ্ববিদ্যালয়ের রিকোয়ারমেন্টস, টিউশন ফি ও স্কলারশিপ বাংলায় সহজে জানুন।
           </p>
         </div>
@@ -97,8 +97,8 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
             </select>
           </div>
 
-          <div className="sm:col-span-4 bg-[#F7F8FA] border border-black/[0.06] rounded-lg px-4 py-2.5 flex items-center justify-between">
-            <span className="text-[12px] text-[#6B7280] shrink-0">Max Tuition:</span>
+          <div className="sm:col-span-4 bg-[var(--color-surface-secondary)] border border-[var(--color-border)] rounded-lg px-4 py-2.5 flex items-center justify-between">
+            <span className="text-[12px] text-[var(--color-text-secondary)] shrink-0">Max Tuition:</span>
             <input
               type="range"
               min="0"
@@ -108,7 +108,7 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
               onChange={(e) => setMaxTuition(parseInt(e.target.value))}
               className="mx-3 accent-[#0066FF] w-20 cursor-pointer"
             />
-            <span className="font-semibold text-[12px] text-[#0066FF] shrink-0">
+            <span className="font-semibold text-[12px] text-[var(--color-brand)] shrink-0">
               {maxTuition >= 50000 ? 'Any' : `$${maxTuition.toLocaleString()}`}
             </span>
           </div>
@@ -116,12 +116,12 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
       </div>
 
       {/* Results Count */}
-      <div className="flex items-center justify-between text-[12px] text-[#6B7280] px-1">
+      <div className="flex items-center justify-between text-[12px] text-[var(--color-text-secondary)] px-1">
         <span>
-          Showing <strong className="text-[#0066FF] font-semibold">{universities.length}</strong> universities
+          Showing <strong className="text-[var(--color-brand)] font-semibold">{universities.length}</strong> universities
         </span>
         {selectedCountry !== 'All' && (
-          <span className="sp-badge bg-[#F0F1F3] text-[#6B7280] border border-black/[0.06]">
+          <span className="sp-badge bg-[#F0F1F3] text-[var(--color-text-secondary)] border border-[var(--color-border)]">
             {selectedCountry}
           </span>
         )}
@@ -147,10 +147,10 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
               <div className="space-y-3">
                 {/* Header */}
                 <div>
-                  <span className="sp-badge bg-[#0066FF]/[0.06] text-[#0066FF] border border-[#0066FF]/[0.12] text-[10px] uppercase tracking-wider">
+                  <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12] text-[10px] uppercase tracking-wider">
                     Rank #{uni.worldRank}
                   </span>
-                  <h3 className="text-[14px] font-semibold text-[#111827] mt-1.5 group-hover:text-[#0066FF] transition-colors duration-150">
+                  <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)] mt-1.5 group-hover:text-[var(--color-brand)] transition-colors duration-150">
                     {uni.name}
                   </h3>
                   <p className="text-[11px] text-[#9CA3AF] flex items-center gap-1 mt-0.5">
@@ -160,17 +160,17 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
                 </div>
 
                 {/* Bangla Description */}
-                <p className="text-[12px] text-[#6B7280] bg-[#F7F8FA] p-3 rounded-xl border border-black/[0.04] leading-relaxed">
+                <p className="text-[12px] text-[var(--color-text-secondary)] bg-[var(--color-surface-secondary)] p-3 rounded-xl border border-black/[0.04] leading-relaxed">
                   {uni.descriptionBangla}
                 </p>
 
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="bg-[#F7F8FA] p-2.5 rounded-lg border border-black/[0.04]">
+                  <div className="bg-[var(--color-surface-secondary)] p-2.5 rounded-lg border border-black/[0.04]">
                     <span className="text-[10px] text-[#9CA3AF] block">Tuition</span>
-                    <span className="font-semibold text-[12px] text-[#0066FF]">{uni.originalTuitionText}</span>
+                    <span className="font-semibold text-[12px] text-[var(--color-brand)]">{uni.originalTuitionText}</span>
                   </div>
-                  <div className="bg-[#F7F8FA] p-2.5 rounded-lg border border-black/[0.04]">
+                  <div className="bg-[var(--color-surface-secondary)] p-2.5 rounded-lg border border-black/[0.04]">
                     <span className="text-[10px] text-[#9CA3AF] block">Requirements</span>
                     <span className="font-semibold text-[12px] text-[#374151]">
                       IELTS {uni.ieltsMinOverall} · CGPA {uni.minCgpa}
@@ -182,7 +182,7 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
                 <div className="space-y-1.5 text-[11px]">
                   <div className="flex items-center justify-between">
                     <span className="text-[#9CA3AF]">Visa Success</span>
-                    <span className="font-semibold text-[#10B981]">{uni.visaSuccessRatePercent}%</span>
+                    <span className="font-semibold text-[var(--color-success)]">{uni.visaSuccessRatePercent}%</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-[#9CA3AF]">Work Permit</span>
@@ -190,14 +190,14 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-[#9CA3AF]">Fall Deadline</span>
-                    <span className="font-semibold text-[#F59E0B]">{uni.applicationDeadlineFall}</span>
+                    <span className="font-semibold text-[var(--color-warning)]">{uni.applicationDeadlineFall}</span>
                   </div>
                 </div>
 
                 {/* Programs */}
                 <div className="flex flex-wrap gap-1.5">
                   {(uni.programs || []).slice(0, 3).map((prog, i) => (
-                    <span key={i} className="text-[10px] bg-[#F0F1F3] text-[#6B7280] px-2 py-0.5 rounded-md">
+                    <span key={i} className="text-[10px] bg-[#F0F1F3] text-[var(--color-text-secondary)] px-2 py-0.5 rounded-md">
                       {prog}
                     </span>
                   ))}
@@ -225,7 +225,7 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
                   className="sp-btn sp-btn-secondary p-2"
                   title="Visit Official Website"
                 >
-                  <ExternalLink className="w-4 h-4 text-[#6B7280]" />
+                  <ExternalLink className="w-4 h-4 text-[var(--color-text-secondary)]" />
                 </a>
               </div>
             </div>
@@ -237,12 +237,12 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
       {selectedUniForAi && (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setSelectedUniForAi(null)}>
           <div className="sp-card-elevated max-w-2xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-start justify-between pb-4 border-b border-black/[0.06]">
+            <div className="flex items-start justify-between pb-4 border-b border-[var(--color-border)]">
               <div>
-                <span className="sp-badge bg-[#0066FF]/[0.06] text-[#0066FF] border border-[#0066FF]/[0.12] text-[10px]">
+                <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12] text-[10px]">
                   AI Deep-Dive
                 </span>
-                <h3 className="text-[18px] font-semibold text-[#111827] mt-1.5">{selectedUniForAi.name}</h3>
+                <h3 className="text-[18px] font-semibold text-[var(--color-text-primary)] mt-1.5">{selectedUniForAi.name}</h3>
                 <p className="text-[12px] text-[#9CA3AF]">
                   {selectedUniForAi.city}, {selectedUniForAi.country}
                 </p>
@@ -257,26 +257,26 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
 
             <div className="space-y-4">
               {/* Bangla Analysis */}
-              <div className="bg-[#0066FF]/[0.04] border border-[#0066FF]/[0.1] p-4 rounded-xl">
-                <h4 className="font-semibold text-[#0066FF] text-[13px] flex items-center gap-1.5 mb-2">
+              <div className="bg-[var(--color-brand)]/[0.04] border border-[#0066FF]/[0.1] p-4 rounded-xl">
+                <h4 className="font-semibold text-[var(--color-brand)] text-[13px] flex items-center gap-1.5 mb-2">
                   <Sparkles className="w-4 h-4" />
                   কেন এই ভার্সিটি বেছে নেবেন
                 </h4>
-                <p className="text-[12px] text-[#6B7280] leading-relaxed">{selectedUniForAi.descriptionBangla}</p>
+                <p className="text-[12px] text-[var(--color-text-secondary)] leading-relaxed">{selectedUniForAi.descriptionBangla}</p>
               </div>
 
               {/* Requirements & Costs */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-[#F7F8FA] p-4 rounded-xl border border-black/[0.04]">
-                  <span className="text-[11px] text-[#6B7280] font-medium block mb-2">প্রয়োজনীয় যোগ্যতা</span>
+                <div className="bg-[var(--color-surface-secondary)] p-4 rounded-xl border border-black/[0.04]">
+                  <span className="text-[11px] text-[var(--color-text-secondary)] font-medium block mb-2">প্রয়োজনীয় যোগ্যতা</span>
                   <ul className="space-y-1.5 text-[12px] text-[#374151]">
                     <li>IELTS: {selectedUniForAi.ieltsMinOverall}</li>
                     <li>Min CGPA: {selectedUniForAi.minCgpa}</li>
                     <li>GRE: {selectedUniForAi.greRequired ? 'Required' : 'Not Required'}</li>
                   </ul>
                 </div>
-                <div className="bg-[#F7F8FA] p-4 rounded-xl border border-black/[0.04]">
-                  <span className="text-[11px] text-[#6B7280] font-medium block mb-2">টিউশন ও স্কলারশিপ</span>
+                <div className="bg-[var(--color-surface-secondary)] p-4 rounded-xl border border-black/[0.04]">
+                  <span className="text-[11px] text-[var(--color-text-secondary)] font-medium block mb-2">টিউশন ও স্কলারশিপ</span>
                   <ul className="space-y-1.5 text-[12px] text-[#374151]">
                     <li>Tuition: {selectedUniForAi.originalTuitionText}</li>
                     <li>Scholarships: {(selectedUniForAi.scholarshipsAvailable || []).join(', ') || 'N/A'}</li>
@@ -285,13 +285,13 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
               </div>
 
               {/* Highlights */}
-              <div className="bg-[#F7F8FA] p-4 rounded-xl border border-black/[0.04]">
-                <span className="text-[11px] text-[#6B7280] font-medium block mb-2">Key Highlights</span>
+              <div className="bg-[var(--color-surface-secondary)] p-4 rounded-xl border border-black/[0.04]">
+                <span className="text-[11px] text-[var(--color-text-secondary)] font-medium block mb-2">Key Highlights</span>
                 <div className="flex flex-wrap gap-2">
                   {(selectedUniForAi.keyHighlights || []).map((hl, idx) => (
                     <span
                       key={idx}
-                      className="sp-badge bg-[#0066FF]/[0.06] text-[#0066FF] border border-[#0066FF]/[0.1]"
+                      className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.1]"
                     >
                       {hl}
                     </span>
@@ -300,7 +300,7 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
               </div>
             </div>
 
-            <div className="pt-4 border-t border-black/[0.06]">
+            <div className="pt-4 border-t border-[var(--color-border)]">
               <button
                 onClick={() => {
                   const msg = `I want to know more about admission strategy and TA/RA funding for ${selectedUniForAi.name} in ${selectedUniForAi.country}. Please explain in Bangla.`;

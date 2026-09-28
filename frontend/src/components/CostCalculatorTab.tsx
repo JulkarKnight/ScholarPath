@@ -27,12 +27,12 @@ export const CostCalculatorTab: React.FC = () => {
       {/* Header */}
       <div className="sp-card p-6 space-y-1">
         <div className="flex items-center gap-2 mb-1">
-          <Calculator className="w-5 h-5 text-[#0066FF]" />
-          <h2 className="text-[18px] font-semibold text-[#111827] tracking-[-0.01em]">
+          <Calculator className="w-5 h-5 text-[var(--color-brand)]" />
+          <h2 className="text-[18px] font-semibold text-[var(--color-text-primary)] tracking-[-0.01em]">
             Cost & Funding Calculator
           </h2>
         </div>
-        <p className="text-[13px] text-[#6B7280]">
+        <p className="text-[13px] text-[var(--color-text-secondary)]">
           টিউশন ফি, লিভিং কস্ট, ফ্লাইট ও ভিসার মোট খরচ হিসাব করে ফান্ডিং গ্যাপ জানুন।
         </p>
       </div>
@@ -40,8 +40,8 @@ export const CostCalculatorTab: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Input Form */}
         <div className="lg:col-span-6 sp-card p-6 space-y-5">
-          <h3 className="text-[14px] font-semibold text-[#111827] pb-3 border-b border-black/[0.06] flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-[#0066FF]" />
+          <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)] pb-3 border-b border-[var(--color-border)] flex items-center gap-2">
+            <DollarSign className="w-4 h-4 text-[var(--color-brand)]" />
             বাজেট নির্ধারণ করুন
           </h3>
 
@@ -117,20 +117,20 @@ export const CostCalculatorTab: React.FC = () => {
         {/* Output */}
         <div className="lg:col-span-6 space-y-5">
           <div className="sp-card-elevated p-6 space-y-5">
-            <h3 className="text-[14px] font-semibold text-[#111827] flex items-center gap-2">
-              <PieChart className="w-4 h-4 text-[#0066FF]" />
+            <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)] flex items-center gap-2">
+              <PieChart className="w-4 h-4 text-[var(--color-brand)]" />
               Financial Analysis
             </h3>
 
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-[#F7F8FA] p-4 rounded-xl border border-black/[0.04]">
+              <div className="bg-[var(--color-surface-secondary)] p-4 rounded-xl border border-black/[0.04]">
                 <span className="text-[11px] text-[#9CA3AF] block mb-1">Total Expense ({durationYears}yr)</span>
-                <span className="font-bold text-[#111827] text-[18px]">${totalExpenseUSD.toLocaleString()}</span>
+                <span className="font-bold text-[var(--color-text-primary)] text-[18px]">${totalExpenseUSD.toLocaleString()}</span>
                 <span className="text-[10px] text-[#9CA3AF] block">≈ ৳{totalExpenseBDT.toLocaleString()}</span>
               </div>
-              <div className="bg-[#F7F8FA] p-4 rounded-xl border border-black/[0.04]">
+              <div className="bg-[var(--color-surface-secondary)] p-4 rounded-xl border border-black/[0.04]">
                 <span className="text-[11px] text-[#9CA3AF] block mb-1">Total Funding</span>
-                <span className="font-bold text-[#0066FF] text-[18px]">${totalFundingUSD.toLocaleString()}</span>
+                <span className="font-bold text-[var(--color-brand)] text-[18px]">${totalFundingUSD.toLocaleString()}</span>
                 <span className="text-[10px] text-[#9CA3AF] block">≈ ৳{Math.round(totalFundingUSD * 120).toLocaleString()}</span>
               </div>
             </div>
@@ -139,16 +139,16 @@ export const CostCalculatorTab: React.FC = () => {
             <div
               className={`p-4 rounded-xl border flex items-center gap-3 ${
                 netFinancialGap >= 0
-                  ? 'bg-[#10B981]/[0.04] border-[#10B981]/[0.15]'
-                  : 'bg-[#EF4444]/[0.04] border-[#EF4444]/[0.15]'
+                  ? 'bg-[var(--color-success)]/[0.04] border-[#10B981]/[0.15]'
+                  : 'bg-[var(--color-danger)]/[0.04] border-[#EF4444]/[0.15]'
               }`}
             >
-              <TrendingUp className={`w-5 h-5 shrink-0 ${netFinancialGap >= 0 ? 'text-[#10B981]' : 'text-[#EF4444]'}`} />
+              <TrendingUp className={`w-5 h-5 shrink-0 ${netFinancialGap >= 0 ? 'text-[var(--color-success)]' : 'text-[var(--color-danger)]'}`} />
               <div>
-                <span className={`font-semibold text-[13px] block ${netFinancialGap >= 0 ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
+                <span className={`font-semibold text-[13px] block ${netFinancialGap >= 0 ? 'text-[var(--color-success)]' : 'text-[var(--color-danger)]'}`}>
                   {netFinancialGap >= 0 ? 'Surplus Fund' : 'Financial Deficit'}
                 </span>
-                <p className="text-[12px] text-[#6B7280]">
+                <p className="text-[12px] text-[var(--color-text-secondary)]">
                   {netFinancialGap >= 0
                     ? `আপনার কাছে $${netFinancialGap.toLocaleString()} USD উদ্ধৃত্ত রয়েছে।`
                     : `$${Math.abs(netFinancialGap).toLocaleString()} USD (৳${Math.abs(Math.round(netFinancialGap * 120)).toLocaleString()}) ঘাটতি পূরণ করতে হবে।`}
@@ -157,12 +157,12 @@ export const CostCalculatorTab: React.FC = () => {
             </div>
 
             {/* AI Advice */}
-            <div className="bg-[#0066FF]/[0.03] p-4 rounded-xl border border-[#0066FF]/[0.1] space-y-2">
-              <h4 className="font-semibold text-[12px] text-[#0066FF] flex items-center gap-1.5">
+            <div className="bg-[var(--color-brand)]/[0.03] p-4 rounded-xl border border-[#0066FF]/[0.1] space-y-2">
+              <h4 className="font-semibold text-[12px] text-[var(--color-brand)] flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
                 AI Mentor Advice
               </h4>
-              <ul className="space-y-1.5 text-[#6B7280] text-[11px] list-disc pl-4">
+              <ul className="space-y-1.5 text-[var(--color-text-secondary)] text-[11px] list-disc pl-4">
                 <li><strong>TA/RA Funding:</strong> প্রফেসরদের ইমেইল পাঠিয়ে Teaching Assistantship এর চেষ্টা করুন।</li>
                 <li><strong>Part-Time:</strong> {country}-তে সপ্তাহে ২০-২৪ ঘন্টা কাজের অনুমতি রয়েছে।</li>
                 <li><strong>Education Loan:</strong> বাণিজ্যিক ব্যাংক থেকে স্টুডেন্ট লোন নিতে পারেন।</li>
