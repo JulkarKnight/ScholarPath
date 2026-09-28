@@ -14,8 +14,8 @@ legacy-ui-backup/
 jdk8u412-b08/
 apache-maven-3.9.6/
 
-
 target/
 .idea/
 .vscode/
 *.iml
+frontend/node/
