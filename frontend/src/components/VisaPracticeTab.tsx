@@ -99,12 +99,12 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
       {/* Header */}
       <div className="sp-card p-6 space-y-1">
         <div className="flex items-center gap-2 mb-1">
-          <Video className="w-5 h-5 text-[#0066FF]" />
-          <h2 className="text-[18px] font-semibold text-[#111827] tracking-[-0.01em]">
+          <Video className="w-5 h-5 text-[var(--color-brand)]" />
+          <h2 className="text-[18px] font-semibold text-[var(--color-text-primary)] tracking-[-0.01em]">
             Visa Interview Practice
           </h2>
         </div>
-        <p className="text-[13px] text-[#6B7280]">
+        <p className="text-[13px] text-[var(--color-text-secondary)]">
           এম্বাসি ভিসা ইন্টারভিউয়ের প্রস্তুতি নিন — কথা বলুন বা লিখুন, AI স্কোর ও টিপস দেবে।
         </p>
       </div>
@@ -114,13 +114,13 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
         <div className="lg:col-span-6 space-y-5">
           {/* Officer Card */}
           <div className="sp-card-elevated p-6 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-black/[0.06]">
+            <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#F0F1F3] flex items-center justify-center font-bold text-[#111827] text-sm">
+                <div className="w-10 h-10 rounded-full bg-[#F0F1F3] flex items-center justify-center font-bold text-[var(--color-text-primary)] text-sm">
                   VO
                 </div>
                 <div>
-                  <span className="font-semibold text-[#111827] text-[13px] block">Consular Visa Officer</span>
+                  <span className="font-semibold text-[var(--color-text-primary)] text-[13px] block">Consular Visa Officer</span>
                   <span className="text-[11px] text-[#9CA3AF]">Embassy Interview · {country}</span>
                 </div>
               </div>
@@ -136,17 +136,17 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
             </div>
 
             {/* Question */}
-            <div className="bg-[#F7F8FA] border border-black/[0.04] p-4 rounded-xl space-y-3">
+            <div className="bg-[var(--color-surface-secondary)] border border-black/[0.04] p-4 rounded-xl space-y-3">
               <div className="flex items-start justify-between gap-2">
-                <span className="sp-badge bg-[#0066FF]/[0.06] text-[#0066FF] border border-[#0066FF]/[0.12] text-[10px] uppercase tracking-wider">
+                <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12] text-[10px] uppercase tracking-wider">
                   Q{currentQuestionIdx + 1}
                 </span>
                 <button
                   onClick={handleSpeakQuestion}
                   className={`sp-btn text-[11px] px-2.5 py-1 rounded-lg border ${
                     isSpeakingQuestion
-                      ? 'bg-[#0066FF] text-white border-[#0066FF] animate-pulse'
-                      : 'sp-btn-ghost border-black/[0.06]'
+                      ? 'bg-[var(--color-brand)] text-white border-[#0066FF] animate-pulse'
+                      : 'sp-btn-ghost border-[var(--color-border)]'
                   }`}
                 >
                   <Volume2 className="w-3.5 h-3.5" />
@@ -154,12 +154,12 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
                 </button>
               </div>
 
-              <p className="text-[14px] font-semibold text-[#111827] leading-relaxed">
+              <p className="text-[14px] font-semibold text-[var(--color-text-primary)] leading-relaxed">
                 "{activeQuestion.questionText}"
               </p>
 
-              <div className="bg-white p-2.5 rounded-lg border border-black/[0.04] text-[11px] text-[#6B7280] flex items-start gap-1.5">
-                <BookOpen className="w-3.5 h-3.5 text-[#0066FF] shrink-0 mt-0.5" />
+              <div className="bg-[var(--color-surface)] p-2.5 rounded-lg border border-black/[0.04] text-[11px] text-[var(--color-text-secondary)] flex items-start gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-[var(--color-brand)] shrink-0 mt-0.5" />
                 <span><strong>টিপস:</strong> {activeQuestion.keyTipsBn}</span>
               </div>
             </div>
@@ -177,17 +177,17 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
           {/* Student Answer Form */}
           <form onSubmit={handleEvaluate} className="sp-card p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <label className="text-[13px] font-semibold text-[#111827]">Your Answer (English)</label>
+              <label className="text-[13px] font-semibold text-[var(--color-text-primary)]">Your Answer (English)</label>
               <button
                 type="button"
                 onClick={handleToggleRecord}
                 className={`sp-btn text-[11px] px-2.5 py-1 rounded-lg border ${
                   isRecording
-                    ? 'bg-[#EF4444] text-white border-[#EF4444] animate-pulse'
-                    : 'sp-btn-ghost border-black/[0.06]'
+                    ? 'bg-[var(--color-danger)] text-white border-[#EF4444] animate-pulse'
+                    : 'sp-btn-ghost border-[var(--color-border)]'
                 }`}
               >
-                {isRecording ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5 text-[#0066FF]" />}
+                {isRecording ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5 text-[var(--color-brand)]" />}
                 <span>{isRecording ? 'Listening...' : 'Voice'}</span>
               </button>
             </div>
@@ -218,15 +218,15 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
         {/* Right: Evaluation Report */}
         <div className="lg:col-span-6 space-y-4">
           {error && (
-            <div className="sp-card bg-[#EF4444]/[0.04] border-[#EF4444]/[0.15] p-4 text-[#EF4444] text-[13px]">{error}</div>
+            <div className="sp-card bg-[var(--color-danger)]/[0.04] border-[#EF4444]/[0.15] p-4 text-[var(--color-danger)] text-[13px]">{error}</div>
           )}
 
           {!evaluation && !loading && (
             <div className="sp-card p-10 text-center space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/[0.06] flex items-center justify-center mx-auto">
-                <Video className="w-6 h-6 text-[#0066FF]" />
+              <div className="w-12 h-12 rounded-2xl bg-[var(--color-brand)]/[0.06] flex items-center justify-center mx-auto">
+                <Video className="w-6 h-6 text-[var(--color-brand)]" />
               </div>
-              <h3 className="text-[15px] font-semibold text-[#111827]">Evaluation Report</h3>
+              <h3 className="text-[15px] font-semibold text-[var(--color-text-primary)]">Evaluation Report</h3>
               <p className="text-[#9CA3AF] text-[12px]">
                 প্রশ্নের উত্তর দিয়ে বাটন প্রেস করলে AI আপনার কনফিডেন্স, গ্রামার ও তথ্যের নির্ভরতা মূল্যায়ন করবে।
               </p>
@@ -236,14 +236,14 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
           {loading && (
             <div className="sp-card p-14 text-center space-y-3">
               <div className="w-8 h-8 border-[3px] border-[#0066FF] border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-[#0066FF] font-medium text-[13px]">Analyzing your response...</p>
+              <p className="text-[var(--color-brand)] font-medium text-[13px]">Analyzing your response...</p>
             </div>
           )}
 
           {evaluation && !loading && (
             <div className="sp-card-elevated p-6 space-y-5">
-              <div className="flex items-center justify-between pb-3 border-b border-black/[0.06]">
-                <span className="sp-badge bg-[#0066FF]/[0.06] text-[#0066FF] border border-[#0066FF]/[0.12]">
+              <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
+                <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12]">
                   <Sparkles className="w-3 h-3" />
                   Report Card
                 </span>
@@ -258,7 +258,7 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
                   { label: 'Relevance', value: evaluation.scores.relevance },
                   { label: 'Authenticity', value: evaluation.scores.authenticity },
                 ].map((s) => (
-                  <div key={s.label} className="bg-[#F7F8FA] p-3.5 rounded-xl border border-black/[0.04]">
+                  <div key={s.label} className="bg-[var(--color-surface-secondary)] p-3.5 rounded-xl border border-black/[0.04]">
                     <span className="text-[11px] text-[#9CA3AF] block mb-1">{s.label}</span>
                     <span className="text-[20px] font-bold" style={{ color: scoreColor(s.value) }}>
                       {s.value}%
@@ -268,21 +268,21 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
               </div>
 
               {/* Feedback */}
-              <div className="bg-[#F7F8FA] p-4 rounded-xl border border-black/[0.04] space-y-1.5">
-                <span className="font-semibold text-[12px] text-[#0066FF] block">ফিডব্যাক</span>
-                <p className="text-[12px] text-[#6B7280] leading-relaxed">{evaluation.feedbackBn}</p>
+              <div className="bg-[var(--color-surface-secondary)] p-4 rounded-xl border border-black/[0.04] space-y-1.5">
+                <span className="font-semibold text-[12px] text-[var(--color-brand)] block">ফিডব্যাক</span>
+                <p className="text-[12px] text-[var(--color-text-secondary)] leading-relaxed">{evaluation.feedbackBn}</p>
               </div>
 
               {/* Better Answer */}
-              <div className="bg-[#0066FF]/[0.03] border border-[#0066FF]/[0.1] p-4 rounded-xl space-y-1.5">
-                <span className="font-semibold text-[12px] text-[#0066FF] block">Exemplary Answer</span>
-                <p className="text-[12px] text-[#6B7280] italic leading-relaxed">"{evaluation.betterAnswerEn}"</p>
+              <div className="bg-[var(--color-brand)]/[0.03] border border-[#0066FF]/[0.1] p-4 rounded-xl space-y-1.5">
+                <span className="font-semibold text-[12px] text-[var(--color-brand)] block">Exemplary Answer</span>
+                <p className="text-[12px] text-[var(--color-text-secondary)] italic leading-relaxed">"{evaluation.betterAnswerEn}"</p>
               </div>
 
               {/* Tips */}
               <div className="space-y-1.5">
-                <span className="font-semibold text-[12px] text-[#111827] block">জরুরি টিপস</span>
-                <ul className="space-y-1 text-[#6B7280] text-[11px] list-disc pl-4">
+                <span className="font-semibold text-[12px] text-[var(--color-text-primary)] block">জরুরি টিপস</span>
+                <ul className="space-y-1 text-[var(--color-text-secondary)] text-[11px] list-disc pl-4">
                   {evaluation.keyAdvicePointsBn.map((tip, i) => (
                     <li key={i}>{tip}</li>
                   ))}

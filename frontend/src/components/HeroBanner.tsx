@@ -22,18 +22,18 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onStartClick, onExploreC
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
         <div className="lg:col-span-7 space-y-5">
           <div className="flex items-center gap-2">
-            <span className="sp-badge bg-[#0066FF]/[0.08] text-[#0066FF] border border-[#0066FF]/[0.12]">
+            <span className="sp-badge bg-[var(--color-brand)]/[0.08] text-[var(--color-brand)] border border-[#0066FF]/[0.12]">
               <Sparkles className="w-3 h-3" />
               AI-Powered Platform
             </span>
           </div>
 
-          <h1 className="text-[28px] sm:text-[34px] font-bold text-[#111827] leading-[1.2] tracking-[-0.02em]">
+          <h1 className="text-[28px] sm:text-[34px] font-bold text-[var(--color-text-primary)] leading-[1.2] tracking-[-0.02em]">
             Your complete toolkit for
-            <span className="text-[#0066FF]"> higher education abroad</span>
+            <span className="text-[var(--color-brand)]"> higher education abroad</span>
           </h1>
 
-          <p className="text-[#6B7280] text-[15px] leading-relaxed max-w-lg">
+          <p className="text-[var(--color-text-secondary)] text-[15px] leading-relaxed max-w-lg">
             Analyze academic readiness, explore universities, simplify policies with AI, and generate application documents — all in one workspace.
           </p>
 
@@ -55,12 +55,12 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onStartClick, onExploreC
         </div>
 
         <div className="lg:col-span-5 hidden lg:block">
-          <div className="bg-[#F7F8FA] border border-black/[0.06] rounded-2xl p-6 space-y-5">
-            <div className="flex items-center gap-2.5 pb-4 border-b border-black/[0.06]">
-              <div className="w-8 h-8 rounded-lg bg-[#0066FF]/[0.08] flex items-center justify-center">
-                <ShieldCheck className="w-4 h-4 text-[#0066FF]" />
+          <div className="bg-[var(--color-surface-secondary)] border border-[var(--color-border)] rounded-2xl p-6 space-y-5">
+            <div className="flex items-center gap-2.5 pb-4 border-b border-[var(--color-border)]">
+              <div className="w-8 h-8 rounded-lg bg-[var(--color-brand)]/[0.08] flex items-center justify-center">
+                <ShieldCheck className="w-4 h-4 text-[var(--color-brand)]" />
               </div>
-              <span className="font-semibold text-[#111827] text-sm">System Status</span>
+              <span className="font-semibold text-[var(--color-text-primary)] text-sm">System Status</span>
             </div>
             <div className="space-y-4">
               {[
@@ -69,7 +69,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onStartClick, onExploreC
                 { label: 'University Data', status: 'Live', icon: Zap, color: '#0066FF' },
               ].map((item) => (
                 <div key={item.label} className="flex items-center justify-between">
-                  <span className="text-[13px] text-[#6B7280]">{item.label}</span>
+                  <span className="text-[13px] text-[var(--color-text-secondary)]">{item.label}</span>
                   <span className="flex items-center gap-1.5 text-[13px] font-medium" style={{ color: item.color }}>
                     <item.icon className="w-3.5 h-3.5" />
                     {item.status}

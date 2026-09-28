@@ -182,12 +182,12 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
 
   const getStatusBadge = (status: string) => {
     if (status === 'Strong') {
-      return <span className="sp-badge bg-[#10B981]/[0.08] text-[#10B981] border border-[#10B981]/[0.15]">Strong</span>;
+      return <span className="sp-badge bg-[var(--color-success)]/[0.08] text-[var(--color-success)] border border-[#10B981]/[0.15]">Strong</span>;
     }
     if (status === 'Adequate') {
-      return <span className="sp-badge bg-[#F59E0B]/[0.08] text-[#F59E0B] border border-[#F59E0B]/[0.15]">Adequate</span>;
+      return <span className="sp-badge bg-[var(--color-warning)]/[0.08] text-[var(--color-warning)] border border-[#F59E0B]/[0.15]">Adequate</span>;
     }
-    return <span className="sp-badge bg-[#EF4444]/[0.08] text-[#EF4444] border border-[#EF4444]/[0.15]">Needs Fix</span>;
+    return <span className="sp-badge bg-[var(--color-danger)]/[0.08] text-[var(--color-danger)] border border-[#EF4444]/[0.15]">Needs Fix</span>;
   };
 
   const scoreColor = (score: number) => {
@@ -210,17 +210,17 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
       {/* Top Banner */}
       <div className="sp-card overflow-hidden relative border-0 shadow-sm">
         <div className="absolute inset-0 bg-gradient-to-r from-[#0066FF]/[0.03] to-[#0066FF]/[0.01] pointer-events-none" />
-        <div className="absolute -right-24 -top-24 w-96 h-96 bg-[#0066FF]/[0.06] rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -right-24 -top-24 w-96 h-96 bg-[var(--color-brand)]/[0.06] rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="p-8 relative z-10 max-w-3xl space-y-3">
-          <span className="sp-badge bg-[#0066FF]/[0.06] text-[#0066FF] border border-[#0066FF]/[0.12] uppercase tracking-wider text-[10px]">
+          <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12] uppercase tracking-wider text-[10px]">
             <Sparkles className="w-3.5 h-3.5" />
             AI Document Studio
           </span>
-          <h2 className="text-[24px] sm:text-[28px] font-semibold text-[#111827] tracking-[-0.02em] leading-tight">
+          <h2 className="text-[24px] sm:text-[28px] font-semibold text-[var(--color-text-primary)] tracking-[-0.02em] leading-tight">
             Analyze Application Docs & Extract Formatted PDFs
           </h2>
-          <p className="text-[13px] text-[#6B7280] leading-relaxed">
+          <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed">
             Upload your Transcript, CV, SOP, language scores, and LORs. AI evaluates against {targetCountry} standards, generates scores, and provides printable PDFs.
           </p>
 
@@ -229,7 +229,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
               onClick={handleLoadSamplePreset}
               className="sp-btn sp-btn-secondary text-[12px]"
             >
-              <RefreshCw className="w-3.5 h-3.5 text-[#0066FF]" />
+              <RefreshCw className="w-3.5 h-3.5 text-[var(--color-brand)]" />
               <span>Fill Sample Data</span>
             </button>
             <span className="text-[12px] text-[#9CA3AF]">
@@ -243,7 +243,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="sp-card p-5">
           <label className="sp-label">Target Country</label>
-          <div className="sp-input bg-[#F7F8FA] border-black/[0.04] text-[#111827] font-semibold">
+          <div className="sp-input bg-[var(--color-surface-secondary)] border-black/[0.04] text-[var(--color-text-primary)] font-semibold">
             {targetCountry}
           </div>
         </div>
@@ -252,7 +252,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
           <select
             value={targetDegree}
             onChange={(e) => setTargetDegree(e.target.value as any)}
-            className="sp-input cursor-pointer font-semibold text-[#0066FF]"
+            className="sp-input cursor-pointer font-semibold text-[var(--color-brand)]"
           >
             <option value="Bachelors">Bachelors</option>
             <option value="Masters">Masters</option>
@@ -265,7 +265,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
             type="text"
             value={targetMajor}
             onChange={(e) => setTargetMajor(e.target.value)}
-            className="sp-input font-semibold text-[#111827]"
+            className="sp-input font-semibold text-[var(--color-text-primary)]"
             placeholder="e.g. Computer Science"
           />
         </div>
@@ -273,7 +273,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
 
       <div className="sp-card p-0 overflow-hidden">
         {/* Document Tabs */}
-        <div className="flex border-b border-black/[0.06] overflow-x-auto hide-scrollbar">
+        <div className="flex border-b border-[var(--color-border)] overflow-x-auto hide-scrollbar">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeDocTab === tab.id;
@@ -283,8 +283,8 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
                 onClick={() => setActiveDocTab(tab.id as any)}
                 className={`flex-1 min-w-[120px] flex items-center justify-center gap-2 py-4 px-4 text-[13px] font-medium transition-colors border-b-2 ${
                   isActive
-                    ? 'border-[#0066FF] text-[#0066FF] bg-[#0066FF]/[0.02]'
-                    : 'border-transparent text-[#6B7280] hover:text-[#111827] hover:bg-[#F7F8FA]'
+                    ? 'border-[#0066FF] text-[var(--color-brand)] bg-[var(--color-brand)]/[0.02]'
+                    : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)]'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -295,15 +295,15 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
         </div>
 
         {/* Editor Area */}
-        <div className="p-6 space-y-4 bg-white">
+        <div className="p-6 space-y-4 bg-[var(--color-surface)]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h3 className="text-[15px] font-semibold text-[#111827] flex items-center gap-2">
-                {activeDocTab === 'transcript' && <GraduationCap className="w-4 h-4 text-[#0066FF]" />}
-                {activeDocTab === 'cv' && <FileText className="w-4 h-4 text-[#0066FF]" />}
-                {activeDocTab === 'sop' && <BookOpen className="w-4 h-4 text-[#0066FF]" />}
-                {activeDocTab === 'language' && <Award className="w-4 h-4 text-[#0066FF]" />}
-                {activeDocTab === 'lor' && <UserCheck className="w-4 h-4 text-[#0066FF]" />}
+              <h3 className="text-[15px] font-semibold text-[var(--color-text-primary)] flex items-center gap-2">
+                {activeDocTab === 'transcript' && <GraduationCap className="w-4 h-4 text-[var(--color-brand)]" />}
+                {activeDocTab === 'cv' && <FileText className="w-4 h-4 text-[var(--color-brand)]" />}
+                {activeDocTab === 'sop' && <BookOpen className="w-4 h-4 text-[var(--color-brand)]" />}
+                {activeDocTab === 'language' && <Award className="w-4 h-4 text-[var(--color-brand)]" />}
+                {activeDocTab === 'lor' && <UserCheck className="w-4 h-4 text-[var(--color-brand)]" />}
                 <span>
                   {activeDocTab === 'transcript' && 'Academic Transcript & Records'}
                   {activeDocTab === 'cv' && 'Curriculum Vitae / Resume'}
@@ -332,7 +332,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
           </div>
 
           {uploadFeedback[activeDocTab] && (
-            <div className="text-[11px] font-medium text-[#10B981] bg-[#10B981]/[0.08] p-2 rounded-lg border border-[#10B981]/[0.15]">
+            <div className="text-[11px] font-medium text-[var(--color-success)] bg-[var(--color-success)]/[0.08] p-2 rounded-lg border border-[#10B981]/[0.15]">
               {uploadFeedback[activeDocTab]}
             </div>
           )}
@@ -355,7 +355,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
             className="sp-input font-mono text-[12px] leading-relaxed h-56 resize-none"
           />
 
-          <div className="pt-4 border-t border-black/[0.06] flex items-center justify-between gap-4">
+          <div className="pt-4 border-t border-[var(--color-border)] flex items-center justify-between gap-4">
             <span className="text-[12px] text-[#9CA3AF]">
               All 5 slots ready for audit
             </span>
@@ -375,7 +375,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
       </div>
 
       {error && (
-        <div className="sp-card bg-[#EF4444]/[0.04] border-[#EF4444]/[0.15] p-4 text-[#EF4444] text-[13px] flex items-center gap-2">
+        <div className="sp-card bg-[var(--color-danger)]/[0.04] border-[#EF4444]/[0.15] p-4 text-[var(--color-danger)] text-[13px] flex items-center gap-2">
           <AlertTriangle className="w-4 h-4" />
           <span>{error}</span>
         </div>
@@ -386,11 +386,11 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
         <div className="space-y-6">
           <div className="sp-card-elevated p-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-2 text-center md:text-left flex-1">
-              <span className="sp-badge bg-[#0066FF]/[0.06] text-[#0066FF] border border-[#0066FF]/[0.12]">
+              <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12]">
                 Evaluation Complete
               </span>
-              <h3 className="text-[20px] font-semibold text-[#111827]">Overall Document Readiness</h3>
-              <p className="text-[13px] text-[#6B7280] leading-relaxed max-w-xl">
+              <h3 className="text-[20px] font-semibold text-[var(--color-text-primary)]">Overall Document Readiness</h3>
+              <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed max-w-xl">
                 "{auditResult.summaryVerdictBn}"
               </p>
             </div>
@@ -408,7 +408,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[24px] font-bold text-[#111827]">{auditResult.overallDocumentReadinessScore}%</span>
+                  <span className="text-[24px] font-bold text-[var(--color-text-primary)]">{auditResult.overallDocumentReadinessScore}%</span>
                 </div>
               </div>
 
@@ -437,10 +437,10 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-[#F0F1F3] flex items-center justify-center text-[#111827]">
+                        <div className="w-8 h-8 rounded-lg bg-[#F0F1F3] flex items-center justify-center text-[var(--color-text-primary)]">
                           <Icon className="w-4 h-4" />
                         </div>
-                        <h4 className="font-semibold text-[#111827] text-[14px]">{docItem.title}</h4>
+                        <h4 className="font-semibold text-[var(--color-text-primary)] text-[14px]">{docItem.title}</h4>
                       </div>
                       <div className="flex items-center gap-2">
                         {getStatusBadge(fieldData.status)}
@@ -458,26 +458,26 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
                     </div>
 
                     <div className="space-y-2">
-                      <div className="bg-[#10B981]/[0.04] border border-[#10B981]/[0.15] p-3 rounded-xl">
-                        <span className="font-semibold text-[11px] text-[#10B981] block mb-1">Strengths</span>
+                      <div className="bg-[var(--color-success)]/[0.04] border border-[#10B981]/[0.15] p-3 rounded-xl">
+                        <span className="font-semibold text-[11px] text-[var(--color-success)] block mb-1">Strengths</span>
                         <ul className="list-disc pl-4 text-[11px] text-[#374151] space-y-0.5">
                           {fieldData.strengths.map((s, idx) => <li key={idx}>{s}</li>)}
                         </ul>
                       </div>
                       {fieldData.weaknesses.length > 0 && (
-                        <div className="bg-[#EF4444]/[0.04] border border-[#EF4444]/[0.15] p-3 rounded-xl">
-                          <span className="font-semibold text-[11px] text-[#EF4444] block mb-1">Weaknesses</span>
+                        <div className="bg-[var(--color-danger)]/[0.04] border border-[#EF4444]/[0.15] p-3 rounded-xl">
+                          <span className="font-semibold text-[11px] text-[var(--color-danger)] block mb-1">Weaknesses</span>
                           <ul className="list-disc pl-4 text-[11px] text-[#374151] space-y-0.5">
                             {fieldData.weaknesses.map((w, idx) => <li key={idx}>{w}</li>)}
                           </ul>
                         </div>
                       )}
-                      <div className="bg-[#F7F8FA] border border-black/[0.04] p-3 rounded-xl">
-                        <span className="font-semibold text-[11px] text-[#111827] block mb-1">AI Tips (Bangla)</span>
-                        <ul className="space-y-1 text-[11px] text-[#6B7280]">
+                      <div className="bg-[var(--color-surface-secondary)] border border-black/[0.04] p-3 rounded-xl">
+                        <span className="font-semibold text-[11px] text-[var(--color-text-primary)] block mb-1">AI Tips (Bangla)</span>
+                        <ul className="space-y-1 text-[11px] text-[var(--color-text-secondary)]">
                           {fieldData.actionableSuggestionsBn.map((sug, idx) => (
                             <li key={idx} className="flex items-start gap-1.5">
-                              <span className="text-[#0066FF] font-bold">•</span>
+                              <span className="text-[var(--color-brand)] font-bold">•</span>
                               <span>{sug}</span>
                             </li>
                           ))}
@@ -486,17 +486,17 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-black/[0.06] flex items-center justify-between gap-2">
+                  <div className="pt-4 border-t border-[var(--color-border)] flex items-center justify-between gap-2">
                     <button
                       onClick={() => handleCopyText(fieldData.generatedFormattedDocText, docItem.key)}
-                      className="sp-btn sp-btn-ghost text-[11px] border border-black/[0.06] py-1 px-2.5"
+                      className="sp-btn sp-btn-ghost text-[11px] border border-[var(--color-border)] py-1 px-2.5"
                     >
-                      {copiedKey === docItem.key ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copiedKey === docItem.key ? <Check className="w-3.5 h-3.5 text-[var(--color-success)]" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>{copiedKey === docItem.key ? 'Copied' : 'Copy'}</span>
                     </button>
                     <button
                       onClick={() => handleDownloadDoc(docItem.title, fieldData.generatedFormattedDocText)}
-                      className="sp-btn sp-btn-ghost text-[11px] border border-black/[0.06] py-1 px-2.5"
+                      className="sp-btn sp-btn-ghost text-[11px] border border-[var(--color-border)] py-1 px-2.5"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>.DOC</span>
@@ -526,11 +526,11 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
           <div className="space-y-6">
             <div className="bg-slate-50 border border-slate-200 p-4 rounded-xl flex items-center justify-between text-xs">
               <div>
-                <span className="text-gray-400 block mb-0.5">Readiness Score</span>
+                <span className="text-[var(--color-text-tertiary)] block mb-0.5">Readiness Score</span>
                 <span className="text-lg font-black text-emerald-700">{auditResult.overallDocumentReadinessScore}%</span>
               </div>
               <div className="text-right">
-                <span className="text-gray-400 block mb-0.5">Target</span>
+                <span className="text-[var(--color-text-tertiary)] block mb-0.5">Target</span>
                 <span className="font-bold text-slate-800">{targetDegree} ({targetCountry})</span>
               </div>
             </div>
@@ -540,7 +540,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
               .map((keyName) => {
                 const docData = (auditResult.documentAudits as any)[keyName] as DocumentAuditField;
                 return (
-                  <div key={keyName} className="border border-slate-200 rounded-xl p-5 space-y-4 bg-white page-break">
+                  <div key={keyName} className="border border-slate-200 rounded-xl p-5 space-y-4 bg-[var(--color-surface)] page-break">
                     <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
                       <h4 className="font-bold text-sm text-slate-800 uppercase tracking-wide">{keyName}</h4>
                       <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">

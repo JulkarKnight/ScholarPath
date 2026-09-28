@@ -23,17 +23,17 @@ export const PrintModal: React.FC<PrintModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-gray-50/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto no-print">
-      <div className="bg-white border border-gray-200 rounded-lg w-full max-w-4xl max-h-[90vh] flex flex-col shadow-sm overflow-hidden animate-fade-in">
+    <div className="fixed inset-0 z-50 bg-[var(--color-surface-secondary)]/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto no-print">
+      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg w-full max-w-4xl max-h-[90vh] flex flex-col shadow-sm overflow-hidden animate-fade-in">
         {/* Modal Top Header (Hidden during print) */}
-        <div className="bg-[#F4F2EE] px-6 py-4 border-b border-gray-200 flex items-center justify-between no-print">
+        <div className="bg-[#F4F2EE] px-6 py-4 border-b border-[var(--color-border)] flex items-center justify-between no-print">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-[#0A66C2]/10 border border-[#0A66C2]/10 flex items-center justify-center text-[#0A66C2]">
               <FileCheck className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-extrabold text-gray-900 text-base">{title}</h3>
-              {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
+              <h3 className="font-extrabold text-[var(--color-text-primary)] text-base">{title}</h3>
+              {subtitle && <p className="text-xs text-[var(--color-text-secondary)]">{subtitle}</p>}
             </div>
           </div>
 
@@ -48,7 +48,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({
 
             <button
               onClick={onClose}
-              className="p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors cursor-pointer"
+              className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)] rounded-xl transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -57,7 +57,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({
 
         {/* Printable View Container */}
         <div className="flex-1 overflow-y-auto p-6 bg-[#F4F2EE]">
-          <div className="bg-white text-slate-900 rounded-xl p-8 max-w-3xl mx-auto shadow-sm space-y-6 printable-area font-sans">
+          <div className="bg-[var(--color-surface)] text-slate-900 rounded-xl p-8 max-w-3xl mx-auto shadow-sm space-y-6 printable-area font-sans">
             {/* Header Stamp for Printable PDF */}
             <div className="border-b-2 border-slate-900 pb-4 flex items-start justify-between">
               <div>
@@ -69,7 +69,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({
                   Official Study Abroad Application & Guidance Report
                 </p>
               </div>
-              <div className="text-right text-[11px] text-gray-400 space-y-0.5">
+              <div className="text-right text-[11px] text-[var(--color-text-tertiary)] space-y-0.5">
                 <p className="font-bold text-slate-800">Generated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
                 <p>Ref ID: SKH-{Math.floor(100000 + Math.random() * 900000)}</p>
                 <p>www.shikkhartho.ai</p>
@@ -80,7 +80,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({
             {children}
 
             {/* Document Footer */}
-            <div className="border-t border-slate-200 pt-4 text-center text-[10px] text-gray-400 space-y-1">
+            <div className="border-t border-slate-200 pt-4 text-center text-[10px] text-[var(--color-text-tertiary)] space-y-1">
               <p className="font-semibold text-slate-700">
                 ScholarPath AI — Empowering Bangladeshi Scholars Worldwide
               </p>

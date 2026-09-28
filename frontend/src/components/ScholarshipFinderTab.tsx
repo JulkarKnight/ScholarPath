@@ -46,12 +46,12 @@ export const ScholarshipFinderTab: React.FC<ScholarshipFinderTabProps> = ({
       <div className="sp-card p-6 space-y-5">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <Award className="w-5 h-5 text-[#0066FF]" />
-            <h2 className="text-[18px] font-semibold text-[#111827] tracking-[-0.01em]">
+            <Award className="w-5 h-5 text-[var(--color-brand)]" />
+            <h2 className="text-[18px] font-semibold text-[var(--color-text-primary)] tracking-[-0.01em]">
               Scholarship Finder
             </h2>
           </div>
-          <p className="text-[13px] text-[#6B7280]">
+          <p className="text-[13px] text-[var(--color-text-secondary)]">
             ফুল ফ্রি স্কলারশিপ (DAAD, Chevening, Erasmus Mundus, Vanier, Fulbright) এর শর্তাবলী ও আবেদনের নিয়ম খুঁজুন।
           </p>
         </div>
@@ -89,7 +89,7 @@ export const ScholarshipFinderTab: React.FC<ScholarshipFinderTabProps> = ({
 
           <div>
             <label className="sp-label">Your CGPA ({userCgpa.toFixed(2)})</label>
-            <div className="bg-[#F7F8FA] border border-black/[0.06] rounded-lg px-4 py-2.5 flex items-center">
+            <div className="bg-[var(--color-surface-secondary)] border border-[var(--color-border)] rounded-lg px-4 py-2.5 flex items-center">
               <input
                 type="range"
                 min="2.5"
@@ -127,21 +127,21 @@ export const ScholarshipFinderTab: React.FC<ScholarshipFinderTabProps> = ({
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <div className="flex items-center gap-2 mb-1.5">
-                        <span className="sp-badge bg-[#0066FF]/[0.06] text-[#0066FF] border border-[#0066FF]/[0.12] text-[10px] uppercase tracking-wider">
+                        <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12] text-[10px] uppercase tracking-wider">
                           {s.coverage}
                         </span>
-                        <span className="sp-badge bg-[#F0F1F3] text-[#6B7280] border border-black/[0.06]">
+                        <span className="sp-badge bg-[#F0F1F3] text-[var(--color-text-secondary)] border border-[var(--color-border)]">
                           {s.country}
                         </span>
                       </div>
-                      <h3 className="text-[15px] font-semibold text-[#111827]">{s.title}</h3>
+                      <h3 className="text-[15px] font-semibold text-[var(--color-text-primary)]">{s.title}</h3>
                     </div>
 
                     <span
                       className={`sp-badge border ${
                         isEligibleByCgpa
-                          ? 'bg-[#10B981]/[0.08] text-[#10B981] border-[#10B981]/[0.2]'
-                          : 'bg-[#EF4444]/[0.08] text-[#EF4444] border-[#EF4444]/[0.2]'
+                          ? 'bg-[var(--color-success)]/[0.08] text-[var(--color-success)] border-[#10B981]/[0.2]'
+                          : 'bg-[var(--color-danger)]/[0.08] text-[var(--color-danger)] border-[#EF4444]/[0.2]'
                       }`}
                     >
                       {isEligibleByCgpa ? 'Eligible' : 'CGPA Short'}
@@ -149,17 +149,17 @@ export const ScholarshipFinderTab: React.FC<ScholarshipFinderTabProps> = ({
                   </div>
 
                   {/* Grant */}
-                  <div className="bg-[#F7F8FA] p-3 rounded-xl border border-black/[0.04]">
+                  <div className="bg-[var(--color-surface-secondary)] p-3 rounded-xl border border-black/[0.04]">
                     <span className="text-[10px] text-[#9CA3AF] font-medium block mb-0.5">Coverage & Benefits</span>
-                    <p className="font-semibold text-[#0066FF] text-[13px]">{s.grantAmountText}</p>
+                    <p className="font-semibold text-[var(--color-brand)] text-[13px]">{s.grantAmountText}</p>
                   </div>
 
-                  <p className="text-[12px] text-[#6B7280] leading-relaxed">{s.descriptionBangla}</p>
+                  <p className="text-[12px] text-[var(--color-text-secondary)] leading-relaxed">{s.descriptionBangla}</p>
 
                   {/* Eligibility */}
                   <div className="space-y-1">
-                    <span className="text-[11px] text-[#6B7280] font-medium block">আবেদনের প্রধান শর্তাবলী:</span>
-                    <ul className="space-y-1 list-disc pl-4 text-[#6B7280] text-[11px]">
+                    <span className="text-[11px] text-[var(--color-text-secondary)] font-medium block">আবেদনের প্রধান শর্তাবলী:</span>
+                    <ul className="space-y-1 list-disc pl-4 text-[var(--color-text-secondary)] text-[11px]">
                       {(s.eligibilityCriteriaBangla || []).map((item, idx) => (
                         <li key={idx}>{item}</li>
                       ))}
@@ -168,8 +168,8 @@ export const ScholarshipFinderTab: React.FC<ScholarshipFinderTabProps> = ({
                 </div>
 
                 {/* Footer */}
-                <div className="pt-3 border-t border-black/[0.06] flex items-center justify-between text-[12px]">
-                  <span className="text-[#F59E0B] font-medium flex items-center gap-1.5">
+                <div className="pt-3 border-t border-[var(--color-border)] flex items-center justify-between text-[12px]">
+                  <span className="text-[var(--color-warning)] font-medium flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5" />
                     Deadline: {s.deadline}
                   </span>

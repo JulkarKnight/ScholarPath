@@ -67,12 +67,12 @@ export const WebsiteSimplifierTab: React.FC = () => {
       {/* Header */}
       <div className="sp-card p-6 space-y-1">
         <div className="flex items-center gap-2 mb-1">
-          <FileText className="w-5 h-5 text-[#0066FF]" />
-          <h2 className="text-[18px] font-semibold text-[#111827] tracking-[-0.01em]">
+          <FileText className="w-5 h-5 text-[var(--color-brand)]" />
+          <h2 className="text-[18px] font-semibold text-[var(--color-text-primary)] tracking-[-0.01em]">
             Website Simplifier
           </h2>
         </div>
-        <p className="text-[13px] text-[#6B7280]">
+        <p className="text-[13px] text-[var(--color-text-secondary)]">
           ভার্সিটি বা এম্বাসির জটিল ইংরেজি লেখা পেস্ট করুন — AI সহজ বাংলায় বুলেট করে দেবে।
         </p>
       </div>
@@ -81,8 +81,8 @@ export const WebsiteSimplifierTab: React.FC = () => {
         {/* Form */}
         <form onSubmit={handleSimplify} className="lg:col-span-6 sp-card p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <label className="text-[13px] font-semibold text-[#111827] flex items-center gap-1.5">
-              <FileText className="w-4 h-4 text-[#0066FF]" />
+            <label className="text-[13px] font-semibold text-[var(--color-text-primary)] flex items-center gap-1.5">
+              <FileText className="w-4 h-4 text-[var(--color-brand)]" />
               Paste text to simplify
             </label>
             <select
@@ -116,7 +116,7 @@ export const WebsiteSimplifierTab: React.FC = () => {
                   key={idx}
                   type="button"
                   onClick={() => setRawText(preset.text)}
-                  className="sp-btn sp-btn-ghost text-[11px] rounded-lg border border-black/[0.06] hover:border-black/[0.12]"
+                  className="sp-btn sp-btn-ghost text-[11px] rounded-lg border border-[var(--color-border)] hover:border-black/[0.12]"
                 >
                   {preset.label}
                 </button>
@@ -146,17 +146,17 @@ export const WebsiteSimplifierTab: React.FC = () => {
         {/* Output */}
         <div className="lg:col-span-6 space-y-4">
           {error && (
-            <div className="sp-card bg-[#EF4444]/[0.04] border-[#EF4444]/[0.15] p-4 text-[#EF4444] text-[13px]">
+            <div className="sp-card bg-[var(--color-danger)]/[0.04] border-[#EF4444]/[0.15] p-4 text-[var(--color-danger)] text-[13px]">
               {error}
             </div>
           )}
 
           {!result && !loading && (
             <div className="sp-card p-10 text-center space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#0066FF]/[0.06] flex items-center justify-center mx-auto">
-                <FileText className="w-6 h-6 text-[#0066FF]" />
+              <div className="w-12 h-12 rounded-2xl bg-[var(--color-brand)]/[0.06] flex items-center justify-center mx-auto">
+                <FileText className="w-6 h-6 text-[var(--color-brand)]" />
               </div>
-              <h3 className="text-[15px] font-semibold text-[#111827]">
+              <h3 className="text-[15px] font-semibold text-[var(--color-text-primary)]">
                 সহজ বাংলা আউটপুট এখানে আসবে
               </h3>
               <p className="text-[#9CA3AF] text-[12px]">
@@ -168,37 +168,37 @@ export const WebsiteSimplifierTab: React.FC = () => {
           {loading && (
             <div className="sp-card p-14 text-center space-y-3">
               <div className="w-8 h-8 border-[3px] border-[#0066FF] border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-[#0066FF] font-medium text-[13px]">সহজীকরণ করা হচ্ছে...</p>
+              <p className="text-[var(--color-brand)] font-medium text-[13px]">সহজীকরণ করা হচ্ছে...</p>
             </div>
           )}
 
           {result && !loading && (
             <div className="sp-card-elevated p-6 space-y-5">
               {/* Top Bar */}
-              <div className="flex items-center justify-between pb-3 border-b border-black/[0.06]">
-                <span className="sp-badge bg-[#0066FF]/[0.06] text-[#0066FF] border border-[#0066FF]/[0.12]">
+              <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
+                <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12]">
                   <Sparkles className="w-3 h-3" />
                   AI Output
                 </span>
                 <button
                   onClick={handleCopy}
-                  className="sp-btn sp-btn-ghost text-[12px] border border-black/[0.06]"
+                  className="sp-btn sp-btn-ghost text-[12px] border border-[var(--color-border)]"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-[var(--color-success)]" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
 
               {/* Required Documents */}
-              <div className="bg-[#F7F8FA] border border-black/[0.04] p-4 rounded-xl space-y-2.5">
-                <h4 className="font-semibold text-[13px] text-[#0066FF] flex items-center gap-2">
+              <div className="bg-[var(--color-surface-secondary)] border border-black/[0.04] p-4 rounded-xl space-y-2.5">
+                <h4 className="font-semibold text-[13px] text-[var(--color-brand)] flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4" />
                   আপনার যা যা লাগবে
                 </h4>
                 <ul className="space-y-1.5">
                   {result.requiredDocuments.map((doc, i) => (
-                    <li key={i} className="text-[12px] text-[#374151] bg-white p-2.5 rounded-lg border border-black/[0.04] flex items-start gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0 mt-0.5" />
+                    <li key={i} className="text-[12px] text-[#374151] bg-[var(--color-surface)] p-2.5 rounded-lg border border-black/[0.04] flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[var(--color-success)] shrink-0 mt-0.5" />
                       {doc}
                     </li>
                   ))}
@@ -207,20 +207,20 @@ export const WebsiteSimplifierTab: React.FC = () => {
 
               {/* Simplified Explanation */}
               <div>
-                <h4 className="font-semibold text-[13px] text-[#111827] mb-2">সহজ বাংলা ব্যাখ্যা</h4>
-                <p className="text-[12px] text-[#6B7280] bg-[#F7F8FA] border border-black/[0.04] p-4 rounded-xl leading-relaxed">
+                <h4 className="font-semibold text-[13px] text-[var(--color-text-primary)] mb-2">সহজ বাংলা ব্যাখ্যা</h4>
+                <p className="text-[12px] text-[var(--color-text-secondary)] bg-[var(--color-surface-secondary)] border border-black/[0.04] p-4 rounded-xl leading-relaxed">
                   {result.simplifiedBn}
                 </p>
               </div>
 
               {/* Deadlines */}
               {result.importantDeadlines.length > 0 && (
-                <div className="bg-[#F59E0B]/[0.04] border border-[#F59E0B]/[0.15] p-4 rounded-xl space-y-2">
-                  <h4 className="font-semibold text-[12px] text-[#F59E0B] flex items-center gap-1.5">
+                <div className="bg-[var(--color-warning)]/[0.04] border border-[#F59E0B]/[0.15] p-4 rounded-xl space-y-2">
+                  <h4 className="font-semibold text-[12px] text-[var(--color-warning)] flex items-center gap-1.5">
                     <Clock className="w-3.5 h-3.5" />
                     জরুরি ডেডলাইন
                   </h4>
-                  <ul className="list-disc pl-5 text-[12px] text-[#6B7280] space-y-1">
+                  <ul className="list-disc pl-5 text-[12px] text-[var(--color-text-secondary)] space-y-1">
                     {result.importantDeadlines.map((dl, i) => (
                       <li key={i}>{dl}</li>
                     ))}
@@ -229,15 +229,15 @@ export const WebsiteSimplifierTab: React.FC = () => {
               )}
 
               {/* Tips */}
-              <div className="bg-[#0066FF]/[0.03] border border-[#0066FF]/[0.1] p-4 rounded-xl space-y-2">
-                <h4 className="font-semibold text-[12px] text-[#0066FF] flex items-center gap-1.5">
+              <div className="bg-[var(--color-brand)]/[0.03] border border-[#0066FF]/[0.1] p-4 rounded-xl space-y-2">
+                <h4 className="font-semibold text-[12px] text-[var(--color-brand)] flex items-center gap-1.5">
                   <Lightbulb className="w-3.5 h-3.5" />
                   AI Tips
                 </h4>
-                <ul className="space-y-1.5 text-[12px] text-[#6B7280]">
+                <ul className="space-y-1.5 text-[12px] text-[var(--color-text-secondary)]">
                   {result.actionTipsBn.map((tip, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="text-[#0066FF] font-bold shrink-0">→</span>
+                      <span className="text-[var(--color-brand)] font-bold shrink-0">→</span>
                       {tip}
                     </li>
                   ))}
