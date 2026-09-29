@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Sparkles, RefreshCw, CheckCircle2, Clock, Lightbulb, Copy, Check } from 'lucide-react';
+import { FileText, Sparkles, RefreshCw, CircleCheck, Clock, Lightbulb, Copy, Check } from 'lucide-react';
 import { SimplifierResponse } from '../types';
 
 export const WebsiteSimplifierTab: React.FC = () => {
@@ -192,13 +192,13 @@ export const WebsiteSimplifierTab: React.FC = () => {
               {/* Required Documents */}
               <div className="bg-[var(--color-surface-secondary)] border border-black/[0.04] p-4 rounded-xl space-y-2.5">
                 <h4 className="font-semibold text-[13px] text-[var(--color-brand)] flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4" />
+                  <CircleCheck className="w-4 h-4" />
                   আপনার যা যা লাগবে
                 </h4>
                 <ul className="space-y-1.5">
                   {result.requiredDocuments.map((doc, i) => (
                     <li key={i} className="text-[12px] text-[#374151] bg-[var(--color-surface)] p-2.5 rounded-lg border border-black/[0.04] flex items-start gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[var(--color-success)] shrink-0 mt-0.5" />
+                      <CircleCheck className="w-3.5 h-3.5 text-[var(--color-success)] shrink-0 mt-0.5" />
                       {doc}
                     </li>
                   ))}

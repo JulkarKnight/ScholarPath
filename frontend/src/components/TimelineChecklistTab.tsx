@@ -8,7 +8,7 @@ import {
   AlertCircle,
   RefreshCw,
   Printer,
-  CheckCircle2
+  CircleCheck
 } from 'lucide-react';
 import { Country, DocumentCheckitem } from '../types';
 import { DEFAULT_DOCUMENT_CHECKLIST } from '../data/dbData';

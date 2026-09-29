@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import {
-  Sparkles, CheckCircle2, AlertTriangle, ArrowRight, RefreshCw, FileText, GraduationCap, BookOpen, Printer, Copy, Check, Clock, FileCheck, Compass, BarChart
+  Sparkles, CircleCheck, TriangleAlert, ArrowRight, RefreshCw, FileText, GraduationCap, BookOpen, Printer, Copy, Check, Clock, FileCheck, Compass, BarChart
 } from 'lucide-react';
 import { Country, ApplicationReadinessResponse } from '../types';
 import { PrintModal } from './PrintModal';
@@ -295,7 +296,7 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
 
           {error && (
             <div className="bg-[var(--color-danger)]/10 border border-[var(--color-danger)]/20 p-4 rounded-xl flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-[var(--color-danger)] shrink-0 mt-0.5" />
+              <TriangleAlert className="w-5 h-5 text-[var(--color-danger)] shrink-0 mt-0.5" />
               <p className="text-[var(--color-danger)] text-sm">{error}</p>
             </div>
           )}
@@ -363,7 +364,7 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                       <h3 className="text-base font-bold flex items-center gap-2 mb-4 text-[var(--color-text-primary)]">
-                        <CheckCircle2 className="w-5 h-5 text-[var(--color-success)]" /> Core Strengths
+                        <CircleCheck className="w-5 h-5 text-[var(--color-success)]" /> Core Strengths
                       </h3>
                       <ul className="space-y-3">
                         {result.strengths.map((str, idx) => (
@@ -383,7 +384,7 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
 
                     <div>
                       <h3 className="text-base font-bold flex items-center gap-2 mb-4 text-[var(--color-text-primary)]">
-                        <AlertTriangle className="w-5 h-5 text-[var(--color-danger)]" /> Critical Gaps
+                        <TriangleAlert className="w-5 h-5 text-[var(--color-danger)]" /> Critical Gaps
                       </h3>
                       <ul className="space-y-3">
                         {result.criticalGaps.length > 0 ? (

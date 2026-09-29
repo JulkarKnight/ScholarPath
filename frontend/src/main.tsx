@@ -5,6 +5,7 @@ import App from './App.tsx';
 import {LandingPage} from './components/LandingPage.tsx';
 import {Login} from './components/auth/Login.tsx';
 import {Register} from './components/auth/Register.tsx';
+import {OAuth2RedirectHandler} from './components/auth/OAuth2RedirectHandler.tsx';
 import './index.css';
 
 const originalFetch = window.fetch;
@@ -37,6 +38,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
         <Route path="/app" element={<Navigate to="/app/readiness" replace />} />
         <Route path="/app/:tab" element={<App />} />
         <Route path="*" element={<Navigate to="/" replace />} />

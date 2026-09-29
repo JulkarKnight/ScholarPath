@@ -1,36 +1,42 @@
 package com.scholarpath.controller;
 
 import com.scholarpath.entity.UserProfile;
+import com.scholarpath.repository.UserProfileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/api/profile")
 public class UserProfileController {
     
-    // In-memory store for user profiles since there's no DB configured yet
-    public static final Map<String, UserProfile> PROFILES = new ConcurrentHashMap<>();
+    @Autowired
+    private UserProfileRepository userProfileRepository;
 
     @GetMapping
     public UserProfile getProfile(Principal principal) {
         if (principal == null) return new UserProfile();
-        return PROFILES.getOrDefault(principal.getName(), new UserProfile());
+        return userProfileRepository.findByEmail(principal.getName())
+                .orElse(new UserProfile());
     }
 
     @PostMapping
     public UserProfile updateProfile(Principal principal, @RequestBody UserProfile profile) {
         if (principal == null) throw new RuntimeException("Unauthorized");
         
-        // Retain email and target country if they exist in the current profile and aren't provided in the update
-        UserProfile existing = PROFILES.get(principal.getName());
-        if (existing != null) {
-            if (profile.getEmail() == null) profile.setEmail(existing.getEmail());
-            if (profile.getTargetCountry() == null) profile.setTargetCountry(existing.getTargetCountry());
-        }
+        UserProfile existing = userProfileRepository.findByEmail(principal.getName()).orElse(new UserProfile());
         
-        PROFILES.put(principal.getName(), profile);
-        return profile;
+        existing.setEmail(principal.getName());
+        if (profile.getFullName() != null) existing.setFullName(profile.getFullName());
+        if (profile.getBio() != null) existing.setBio(profile.getBio());
+        if (profile.getProfilePicUrl() != null) existing.setProfilePicUrl(profile.getProfilePicUrl());
+        if (profile.getTargetCountry() != null) existing.setTargetCountry(profile.getTargetCountry());
+        if (profile.getTargetDegree() != null) existing.setTargetDegree(profile.getTargetDegree());
+        if (profile.getCurrentDegree() != null) existing.setCurrentDegree(profile.getCurrentDegree());
+        if (profile.getCgpa() != null) existing.setCgpa(profile.getCgpa());
+        if (profile.getIeltsScore() != null) existing.setIeltsScore(profile.getIeltsScore());
+        if (profile.getBudget() != null) existing.setBudget(profile.getBudget());
+        
+        return userProfileRepository.save(existing);
     }
 }

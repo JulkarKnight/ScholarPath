@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, ShieldCheck, CheckCircle2, Zap, Sparkles } from 'lucide-react';
+import { ArrowRight, ShieldCheck, CircleCheck, Zap, Sparkles } from 'lucide-react';
 
 interface HeroBannerProps {
   onStartClick: () => void;
@@ -64,8 +64,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onStartClick, onExploreC
             </div>
             <div className="space-y-4">
               {[
-                { label: 'Document Audit', status: 'Operational', icon: CheckCircle2, color: '#10B981' },
-                { label: 'Knowledge Base', status: 'Updated', icon: CheckCircle2, color: '#10B981' },
+                { label: 'Document Audit', status: 'Operational', icon: CircleCheck, color: '#10B981' },
+                { label: 'Knowledge Base', status: 'Updated', icon: CircleCheck, color: '#10B981' },
                 { label: 'University Data', status: 'Live', icon: Zap, color: '#0066FF' },
               ].map((item) => (
                 <div key={item.label} className="flex items-center justify-between">

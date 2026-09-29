@@ -30,6 +30,9 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private com.scholarpath.repository.UserProfileRepository userProfileRepository;
+
     private static final java.io.File USERS_FILE = new java.io.File("users-store.properties");
 
     @javax.annotation.PostConstruct
@@ -46,9 +49,14 @@ public class AuthController {
                                 .authorities("USER")
                                 .build());
                         com.scholarpath.entity.UserProfile profile = new com.scholarpath.entity.UserProfile();
-                        profile.setEmail(props.getProperty(key + ".email", ""));
+                        String email = props.getProperty(key + ".email", "");
+                        if (email.isEmpty()) email = key + "@local.dev";
+                        profile.setEmail(email);
+                        profile.setFullName(key);
                         profile.setTargetCountry(props.getProperty(key + ".country", "Canada"));
-                        com.scholarpath.controller.UserProfileController.PROFILES.put(key, profile);
+                        if (!userProfileRepository.findByEmail(email).isPresent()) {
+                            userProfileRepository.save(profile);
+                        }
                     }
                 }
             } catch (Exception ignored) {
@@ -95,9 +103,13 @@ public class AuthController {
 
         // Initialize UserProfile
         com.scholarpath.entity.UserProfile profile = new com.scholarpath.entity.UserProfile();
-        profile.setEmail(email);
+        String finalEmail = (email != null && !email.isEmpty()) ? email : username + "@local.dev";
+        profile.setEmail(finalEmail);
+        profile.setFullName(username);
         profile.setTargetCountry(targetCountry);
-        com.scholarpath.controller.UserProfileController.PROFILES.put(username, profile);
+        if (!userProfileRepository.findByEmail(finalEmail).isPresent()) {
+            userProfileRepository.save(profile);
+        }
 
         // Generate JWT token automatically on registration
         final UserDetails userDetails = userDetailsManager.loadUserByUsername(username);

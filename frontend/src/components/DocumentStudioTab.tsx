@@ -16,7 +16,7 @@ import {
   GraduationCap,
   BookOpen,
   UserCheck,
-  AlertTriangle
+  TriangleAlert
 } from 'lucide-react';
 import { Country, DocumentAuditResponse, DocumentAuditField } from '../types';
 import { PrintModal } from './PrintModal';
@@ -376,7 +376,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
 
       {error && (
         <div className="sp-card bg-[var(--color-danger)]/[0.04] border-[#EF4444]/[0.15] p-4 text-[var(--color-danger)] text-[13px] flex items-center gap-2">
-          <AlertTriangle className="w-4 h-4" />
+          <TriangleAlert className="w-4 h-4" />
           <span>{error}</span>
         </div>
       )}

@@ -23,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+
     // Use in-memory user manager for simplicity.
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
@@ -49,12 +52,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/auth/**").permitAll()
+            .antMatchers("/api/auth/**", "/oauth2/**").permitAll()
             .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/", "/login", "/register", "/app", "/app/**", "/assets/**", "/index.html", "/favicon.svg", "/error").permitAll()
             .antMatchers("/api/**").authenticated()
             .anyRequest().permitAll()
             .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .oauth2Login()
+                .successHandler(oAuth2LoginSuccessHandler);
         
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

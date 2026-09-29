@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { ScholarPathLogo } from './ScholarPathLogo';
 
 export const Footer: React.FC = () => {
@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
           <span className="font-semibold text-sm text-[var(--color-text-primary)]">
             ScholarPath<span className="text-[var(--color-brand)]">AI</span>
           </span>
-          <span className="text-[var(--color-text-tertiary)] text-sm ml-2">© {new Date().getFullYear()}</span>
+          <span className="text-[var(--color-text-tertiary)] text-sm ml-2">� {new Date().getFullYear()}</span>
         </div>
         
         <div className="flex gap-6 text-sm text-[var(--color-text-secondary)]">
