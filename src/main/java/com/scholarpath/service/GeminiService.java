@@ -111,6 +111,15 @@ public class GeminiService {
                     }
                 } catch (HttpStatusCodeException e) {
                     // Catch High Demand (503), Rate Limit (429), Not Found (404 for deprecated models) and gracefully try next
+                    if (e.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS) {
+                        System.err.println("[FALLBACK CASCADE] Rate limit hit (429). Waiting 2.5s before trying next...");
+                        try {
+                            Thread.sleep(2500);
+                        } catch (InterruptedException ie) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+
                     if (e.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS || 
                         e.getStatusCode() == HttpStatus.SERVICE_UNAVAILABLE || 
                         e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR ||
