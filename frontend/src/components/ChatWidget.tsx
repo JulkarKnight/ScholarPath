@@ -1,7 +1,7 @@
-﻿import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles, User, Bot, RefreshCw, X, MessageSquare } from 'lucide-react';
 import { ChatMessage } from '../types';
-import { ScholarPathLogo } from './ScholarPathLogo';
+import { ChatbotLogo } from './ChatbotLogo';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface ChatWidgetProps {
@@ -59,7 +59,7 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ initialPrompt, isOpen, o
       const botMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'assistant',
-        text: data.reply || 'দুঃখিত, কোনো উত্তর পাওয়া যায়নি।',
+        text: data.text || data.reply || 'দুঃখিত, কোনো উত্তর পাওয়া যায়নি।',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, botMsg]);
@@ -97,8 +97,8 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ initialPrompt, isOpen, o
       {/* Chat Header */}
       <div className="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between bg-gradient-to-r from-[var(--color-surface)] to-[var(--color-surface-secondary)]">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[var(--color-brand)] flex items-center justify-center shadow-md">
-            <ScholarPathLogo variant="icon" className="scale-[0.6]" />
+          <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-sm">
+            <ChatbotLogo size={40} />
           </div>
           <div>
             <h3 className="font-bold text-[var(--color-text-primary)] text-[15px] flex items-center gap-2">
@@ -126,10 +126,10 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ initialPrompt, isOpen, o
               className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm ${
                 m.sender === 'user'
                   ? 'bg-[var(--color-brand)] text-white'
-                  : 'bg-[var(--color-surface-secondary)] border border-[var(--color-border)] text-[var(--color-brand)]'
+                  : 'bg-transparent'
               }`}
             >
-              {m.sender === 'user' ? <User className="w-4 h-4" /> : <ScholarPathLogo variant="icon" className="scale-[0.5]" />}
+              {m.sender === 'user' ? <User className="w-4 h-4" /> : <ChatbotLogo size={32} />}
             </div>
 
             <div
@@ -149,8 +149,8 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ initialPrompt, isOpen, o
 
         {loading && (
           <div className="flex items-end gap-3">
-            <div className="w-8 h-8 rounded-full bg-[var(--color-surface-secondary)] border border-[var(--color-border)] text-[var(--color-brand)] flex items-center justify-center">
-              <ScholarPathLogo variant="icon" className="scale-[0.5]" />
+            <div className="w-8 h-8 rounded-full flex items-center justify-center">
+              <ChatbotLogo size={32} />
             </div>
             <div className="bg-[var(--color-surface-secondary)] border border-[var(--color-border)] px-4 py-3 rounded-2xl rounded-bl-sm flex items-center gap-2 text-[var(--color-brand)] text-[13px] font-medium shadow-sm">
               <RefreshCw className="w-4 h-4 animate-spin" />

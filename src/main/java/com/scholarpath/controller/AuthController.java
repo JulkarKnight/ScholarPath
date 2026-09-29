@@ -1,4 +1,4 @@
-﻿package com.scholarpath.controller;
+package com.scholarpath.controller;
 
 import com.scholarpath.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,49 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static final java.io.File USERS_FILE = new java.io.File("users-store.properties");
+
+    @javax.annotation.PostConstruct
+    public void initUsers() {
+        if (USERS_FILE.exists()) {
+            java.util.Properties props = new java.util.Properties();
+            try (java.io.FileInputStream fis = new java.io.FileInputStream(USERS_FILE)) {
+                props.load(fis);
+                for (String key : props.stringPropertyNames()) {
+                    if (!key.contains(".") && !userDetailsManager.userExists(key)) {
+                        String encodedPass = props.getProperty(key);
+                        userDetailsManager.createUser(User.withUsername(key)
+                                .password(encodedPass)
+                                .authorities("USER")
+                                .build());
+                        com.scholarpath.entity.UserProfile profile = new com.scholarpath.entity.UserProfile();
+                        profile.setEmail(props.getProperty(key + ".email", ""));
+                        profile.setTargetCountry(props.getProperty(key + ".country", "Canada"));
+                        com.scholarpath.controller.UserProfileController.PROFILES.put(key, profile);
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
+    private synchronized void persistUser(String username, String encodedPass, String email, String targetCountry) {
+        java.util.Properties props = new java.util.Properties();
+        if (USERS_FILE.exists()) {
+            try (java.io.FileInputStream fis = new java.io.FileInputStream(USERS_FILE)) {
+                props.load(fis);
+            } catch (Exception ignored) {
+            }
+        }
+        props.setProperty(username, encodedPass);
+        if (email != null) props.setProperty(username + ".email", email);
+        if (targetCountry != null) props.setProperty(username + ".country", targetCountry);
+        try (java.io.FileOutputStream fos = new java.io.FileOutputStream(USERS_FILE)) {
+            props.store(fos, "ScholarPath Persistent Users");
+        } catch (Exception ignored) {
+        }
+    }
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Map<String, String> request) {
         String username = request.get("username");
@@ -43,10 +86,12 @@ public class AuthController {
             return ResponseEntity.badRequest().body(error);
         }
 
+        String encodedPass = passwordEncoder.encode(password);
         userDetailsManager.createUser(User.withUsername(username)
-                .password(passwordEncoder.encode(password))
+                .password(encodedPass)
                 .authorities("USER")
                 .build());
+        persistUser(username, encodedPass, email, targetCountry);
 
         // Initialize UserProfile
         com.scholarpath.entity.UserProfile profile = new com.scholarpath.entity.UserProfile();
