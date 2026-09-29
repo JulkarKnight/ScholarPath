@@ -116,11 +116,34 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
           <div className="sp-card-elevated p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#F0F1F3] flex items-center justify-center font-bold text-[var(--color-text-primary)] text-sm">
+                <div
+                  className={`relative w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
+                    isSpeakingQuestion
+                      ? 'bg-[var(--color-brand)] text-white shadow-md shadow-[var(--color-brand-subtle)] ring-4 ring-[var(--color-brand-subtle)]'
+                      : 'bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] border border-[var(--color-border)]'
+                  }`}
+                >
                   VO
                 </div>
                 <div>
-                  <span className="font-semibold text-[var(--color-text-primary)] text-[13px] block">Consular Visa Officer</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-[var(--color-text-primary)] text-[13px] block">Consular Visa Officer</span>
+                    {isSpeakingQuestion && (
+                      <span className="inline-flex items-end gap-[2px] h-3.5 px-1.5 py-0.5 rounded-full bg-[var(--color-brand-subtle)]">
+                        {[0, 0.15, 0.3, 0.1, 0.25].map((delay, i) => (
+                          <span
+                            key={i}
+                            className="w-[2.5px] bg-[var(--color-brand)] rounded-full animate-bounce"
+                            style={{
+                              height: i % 2 === 0 ? '10px' : '6px',
+                              animationDuration: '0.55s',
+                              animationDelay: `${delay}s`,
+                            }}
+                          />
+                        ))}
+                      </span>
+                    )}
+                  </div>
                   <span className="text-[11px] text-[#9CA3AF]">Embassy Interview · {country}</span>
                 </div>
               </div>
@@ -145,12 +168,27 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
                   onClick={handleSpeakQuestion}
                   className={`sp-btn text-[11px] px-2.5 py-1 rounded-lg border ${
                     isSpeakingQuestion
-                      ? 'bg-[var(--color-brand)] text-white border-[#0066FF] animate-pulse'
+                      ? 'bg-[var(--color-brand)] text-white border-[#0066FF]'
                       : 'sp-btn-ghost border-[var(--color-border)]'
                   }`}
                 >
                   <Volume2 className="w-3.5 h-3.5" />
                   <span>{isSpeakingQuestion ? 'Speaking...' : 'Listen'}</span>
+                  {isSpeakingQuestion && (
+                    <span className="inline-flex items-end gap-[2px] h-3 ml-0.5">
+                      {[0, 0.12, 0.24, 0.08].map((delay, i) => (
+                        <span
+                          key={i}
+                          className="w-[2px] bg-white rounded-full animate-bounce"
+                          style={{
+                            height: i % 2 === 0 ? '9px' : '5px',
+                            animationDuration: '0.5s',
+                            animationDelay: `${delay}s`,
+                          }}
+                        />
+                      ))}
+                    </span>
+                  )}
                 </button>
               </div>
 
@@ -183,12 +221,27 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
                 onClick={handleToggleRecord}
                 className={`sp-btn text-[11px] px-2.5 py-1 rounded-lg border ${
                   isRecording
-                    ? 'bg-[var(--color-danger)] text-white border-[#EF4444] animate-pulse'
+                    ? 'bg-[var(--color-danger)] text-white border-[#EF4444]'
                     : 'sp-btn-ghost border-[var(--color-border)]'
                 }`}
               >
                 {isRecording ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5 text-[var(--color-brand)]" />}
                 <span>{isRecording ? 'Listening...' : 'Voice'}</span>
+                {isRecording && (
+                  <span className="inline-flex items-end gap-[2px] h-3 ml-0.5">
+                    {[0, 0.14, 0.28, 0.1].map((delay, i) => (
+                      <span
+                        key={i}
+                        className="w-[2px] bg-white rounded-full animate-bounce"
+                        style={{
+                          height: i % 2 === 0 ? '9px' : '5px',
+                          animationDuration: '0.45s',
+                          animationDelay: `${delay}s`,
+                        }}
+                      />
+                    ))}
+                  </span>
+                )}
               </button>
             </div>
 

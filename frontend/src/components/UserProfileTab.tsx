@@ -64,7 +64,7 @@ export const UserProfileTab: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('jwt_token');
-    navigate('/login');
+    navigate('/');
   };
 
   if (loading) return <div className="p-8 text-center text-[var(--color-text-secondary)]">Loading profile...</div>;

@@ -1,7 +1,7 @@
-﻿import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Lock, User } from 'lucide-react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { ArrowRight, ArrowLeft, Lock, User } from 'lucide-react';
 import { ScholarPathLogo } from '../ScholarPathLogo';
 
 export const Login: React.FC = () => {
@@ -10,6 +10,9 @@ export const Login: React.FC = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const rawRedirect = searchParams.get('redirect');
+  const redirectPath = rawRedirect && rawRedirect.startsWith('/app') ? rawRedirect : '/app/readiness';
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +32,7 @@ export const Login: React.FC = () => {
 
       const data = await res.json();
       localStorage.setItem('jwt_token', data.token);
-      navigate('/app');
+      navigate(redirectPath, { replace: true });
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -40,8 +43,19 @@ export const Login: React.FC = () => {
   return (
     <div className="min-h-screen bg-[var(--color-bg)] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="mb-6 flex justify-center">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-brand)] transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to Home
+          </Link>
+        </div>
         <div className="flex justify-center mb-6">
-          <ScholarPathLogo variant="full" />
+          <Link to="/">
+            <ScholarPathLogo variant="full" />
+          </Link>
         </div>
         <h2 className="text-center text-3xl font-extrabold text-[var(--color-text-primary)]">
           Welcome Back
@@ -118,7 +132,10 @@ export const Login: React.FC = () => {
             </div>
 
             <div className="mt-6 text-center">
-              <Link to="/register" className="font-medium text-[var(--color-brand)] hover:text-[var(--color-brand-hover)]">
+              <Link
+                to={searchParams.get('redirect') ? `/register?redirect=${encodeURIComponent(redirectPath)}` : '/register'}
+                className="font-medium text-[var(--color-brand)] hover:text-[var(--color-brand-hover)]"
+              >
                 Create a new account
               </Link>
             </div>

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Sparkles, CheckCircle2, AlertTriangle, ArrowRight, RefreshCw, FileText, GraduationCap, BookOpen, Printer, Copy, Check, Clock, FileCheck, Compass, BarChart
 } from 'lucide-react';
@@ -120,41 +120,72 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-          <div className="sp-card p-5 cursor-pointer" onClick={() => onNavigateToTab('readiness')}>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -3 }}
+            transition={{ duration: 0.25, delay: 0 }}
+            className="sp-card p-5 cursor-pointer"
+            onClick={() => {
+              const el = document.getElementById('readiness-form-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
             <div className="flex items-center justify-between mb-3">
               <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Readiness</span>
               <BarChart className="w-5 h-5 text-[var(--color-brand)] opacity-80" />
             </div>
-            <div className="text-[28px] font-bold text-[var(--color-text-primary)]">82%</div>
-          </div>
+            <div className="text-[28px] font-bold text-[var(--color-text-primary)]">{result ? `${result.overallScorePercent}%` : '82%'}</div>
+          </motion.div>
           
-          <div className="sp-card p-5 cursor-pointer" onClick={() => onNavigateToTab('docstudio')}>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -3 }}
+            transition={{ duration: 0.25, delay: 0.07 }}
+            className="sp-card p-5 cursor-pointer"
+            onClick={() => onNavigateToTab('docstudio')}
+          >
             <div className="flex items-center justify-between mb-3">
               <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Documents</span>
               <FileCheck className="w-5 h-5 text-[var(--color-brand)] opacity-80" />
             </div>
             <div className="text-[28px] font-bold text-[var(--color-text-primary)]">7 <span className="text-[18px] text-[var(--color-text-tertiary)]">/ 9</span></div>
-          </div>
+          </motion.div>
 
-          <div className="sp-card p-5 cursor-pointer" onClick={() => onNavigateToTab('universities')}>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -3 }}
+            transition={{ duration: 0.25, delay: 0.14 }}
+            className="sp-card p-5 cursor-pointer"
+            onClick={() => onNavigateToTab('universities')}
+          >
             <div className="flex items-center justify-between mb-3">
               <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Matches</span>
               <Compass className="w-5 h-5 text-[var(--color-brand)] opacity-80" />
             </div>
             <div className="text-[28px] font-bold text-[var(--color-text-primary)]">14</div>
-          </div>
+          </motion.div>
 
-          <div className="sp-card p-5 cursor-pointer" onClick={() => onNavigateToTab('checklist')}>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -3 }}
+            transition={{ duration: 0.25, delay: 0.21 }}
+            className="sp-card p-5 cursor-pointer"
+            onClick={() => onNavigateToTab('checklist')}
+          >
             <div className="flex items-center justify-between mb-3">
               <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Next Deadline</span>
               <Clock className="w-5 h-5 text-[var(--color-warning)] opacity-80" />
             </div>
             <div className="text-[28px] font-bold text-[var(--color-text-primary)]">18 <span className="text-[18px] text-[var(--color-text-tertiary)]">days</span></div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div id="readiness-form-section" className="flex items-center justify-between scroll-mt-6">
         <h2 className="text-[22px] font-bold text-[var(--color-text-primary)] flex items-center gap-2">
           AI-Powered Readiness Analysis
           <Sparkles className="w-4 h-4 text-[var(--color-accent)]" />
@@ -270,16 +301,55 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
           )}
 
           {result && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="space-y-6"
+            >
               <div className="sp-card overflow-hidden">
                 <div className="bg-[var(--color-brand)] p-6 sm:p-8 text-white relative">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-surface)]/10 rounded-full blur-3xl pointer-events-none" />
                   <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-                    <div>
-                      <h2 className="text-sm uppercase tracking-widest font-semibold text-white/80 mb-2">Overall AI Prediction</h2>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-5xl sm:text-6xl font-extrabold">{result.overallScorePercent}%</span>
-                        <span className="text-lg font-medium text-white/90">Readiness</span>
+                    <div className="flex items-center gap-5">
+                      {/* Animated Circular Score Gauge */}
+                      <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
+                        <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
+                          <circle
+                            cx="40"
+                            cy="40"
+                            r="34"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.2)"
+                            strokeWidth="7"
+                          />
+                          <motion.circle
+                            cx="40"
+                            cy="40"
+                            r="34"
+                            fill="none"
+                            stroke="#FFFFFF"
+                            strokeWidth="7"
+                            strokeLinecap="round"
+                            strokeDasharray={2 * Math.PI * 34}
+                            initial={{ strokeDashoffset: 2 * Math.PI * 34 }}
+                            animate={{
+                              strokeDashoffset:
+                                2 * Math.PI * 34 * (1 - Math.min(100, Math.max(0, result.overallScorePercent)) / 100),
+                            }}
+                            transition={{ duration: 1.2, ease: "easeOut" }}
+                          />
+                        </svg>
+                        <span className="absolute text-lg font-extrabold text-white">
+                          {result.overallScorePercent}%
+                        </span>
+                      </div>
+                      <div>
+                        <h2 className="text-xs uppercase tracking-widest font-semibold text-white/80 mb-1">Overall AI Prediction</h2>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-4xl sm:text-5xl font-extrabold">{result.overallScorePercent}%</span>
+                          <span className="text-base font-medium text-white/90">Readiness</span>
+                        </div>
                       </div>
                     </div>
                     <div className="bg-[var(--color-surface)]/10 backdrop-blur-md border border-white/20 p-4 rounded-xl text-center min-w-[140px]">
@@ -297,10 +367,16 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
                       </h3>
                       <ul className="space-y-3">
                         {result.strengths.map((str, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+                          <motion.li
+                            key={idx}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.25, delay: 0.15 + idx * 0.08 }}
+                            className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]"
+                          >
                             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)] mt-1.5 shrink-0" />
                             {str}
-                          </li>
+                          </motion.li>
                         ))}
                       </ul>
                     </div>
@@ -312,10 +388,16 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
                       <ul className="space-y-3">
                         {result.criticalGaps.length > 0 ? (
                           result.criticalGaps.map((gap, idx) => (
-                            <li key={idx} className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+                            <motion.li
+                              key={idx}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.25, delay: 0.25 + idx * 0.08 }}
+                              className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]"
+                            >
                               <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-danger)] mt-1.5 shrink-0" />
                               {gap}
-                            </li>
+                            </motion.li>
                           ))
                         ) : (
                           <li className="text-sm text-[var(--color-text-secondary)]">No critical gaps identified! Great profile.</li>
@@ -348,7 +430,7 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

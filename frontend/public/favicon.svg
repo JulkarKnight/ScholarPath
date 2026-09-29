@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Learning path logo">
+  <defs>
+    <style>
+      :root {
+        --bg-start: #4F46E5;
+        --bg-mid: #2563EB;
+        --bg-end: #06B6D4;
+        --orbit-stroke: #FFFFFF;
+        --path-shadow: #3B5BE0;
+        --cap-bg: #FFFFFF;
+        --cap-shadow: #DCE6FF;
+        --cap-line: #3B5BE0;
+        --globe-fill: #FFFFFF;
+        --globe-lines: #2563EB;
+        --spark: #FCD34D;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-start: #312E81;
+          --bg-mid: #1E3A8A;
+          --bg-end: #164E63;
+          --orbit-stroke: #9CA3AF;
+          --path-shadow: #1E3A8A;
+          --cap-bg: #F3F4F6;
+          --cap-shadow: #9CA3AF;
+          --cap-line: #1E3A8A;
+          --globe-fill: #F3F4F6;
+          --globe-lines: #1E3A8A;
+          --spark: #FBBF24;
+        }
+      }
+    </style>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="var(--bg-start)"/>
+      <stop offset="0.6" stop-color="var(--bg-mid)"/>
+      <stop offset="1" stop-color="var(--bg-end)"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Tile -->
+  <rect x="16" y="16" width="480" height="480" rx="120" fill="url(#tile)"/>
+  <rect x="16" y="16" width="480" height="480" rx="120" fill="url(#shine)"/>
+
+  <!-- Orbit ring -->
+  <ellipse cx="256" cy="290" rx="185" ry="64" transform="rotate(-18 256 290)"
+           fill="none" stroke="var(--orbit-stroke)" stroke-opacity="0.3" stroke-width="6" stroke-dasharray="2 14" stroke-linecap="round"/>
+
+  <!-- Path / road -->
+  <path d="M256 262 C256 312 180 322 200 364 C218 402 310 368 338 404"
+        fill="none" stroke="var(--orbit-stroke)" stroke-width="30" stroke-linecap="round"/>
+  <path d="M256 262 C256 312 180 322 200 364 C218 402 310 368 338 404"
+        fill="none" stroke="var(--path-shadow)" stroke-width="4" stroke-dasharray="3 12" stroke-linecap="round"/>
+
+  <!-- Globe node at end of path -->
+  <circle cx="352" cy="414" r="38" fill="var(--globe-fill)"/>
+  <g fill="none" stroke="var(--globe-lines)" stroke-width="5" stroke-linecap="round">
+    <ellipse cx="352" cy="414" rx="16" ry="38"/>
+    <path d="M314 414 H390"/>
+    <path d="M322 393 H382 M322 435 H382" stroke-opacity="0.6"/>
+  </g>
+
+  <!-- Graduation cap (diamond) -->
+  <polygon points="96,190 256,116 416,190 256,264" fill="var(--cap-bg)" stroke="var(--cap-bg)" stroke-width="14" stroke-linejoin="round"/>
+  <polygon points="256,116 416,190 256,264" fill="var(--cap-shadow)"/>
+  <path d="M256 150 L350 190 L256 230 L162 190 Z" fill="none" stroke="var(--cap-line)" stroke-opacity="0.35" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- Tassel as a network node -->
+  <path d="M416 190 V246" stroke="var(--spark)" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="416" cy="256" r="13" fill="var(--spark)"/>
+
+  <!-- Spark -->
+  <path d="M120 96 L128 122 L154 130 L128 138 L120 164 L112 138 L86 130 L112 122 Z" fill="var(--spark)"/>
+  <circle cx="176" cy="84" r="6" fill="#FFFFFF" fill-opacity="0.8"/>
+  <circle cx="440" cy="110" r="5" fill="#FFFFFF" fill-opacity="0.6"/>
+</svg>

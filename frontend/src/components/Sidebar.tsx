@@ -1,4 +1,5 @@
-﻿import React from 'react';
+import React from 'react';
+import { motion } from 'motion/react';
 import {
   BarChart3, FileCheck, Compass, FileText, ListChecks, Award, Calculator, Video, LogOut
 } from 'lucide-react';
@@ -28,7 +29,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isOpe
 
   const handleLogout = () => {
     localStorage.removeItem('jwt_token');
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -59,14 +60,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isOpe
                   setActiveTab(tab.id);
                   setIsOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 text-[14px] font-medium transition-colors rounded-xl ${
+                className={`relative w-full flex items-center gap-3 px-3 py-2.5 text-[14px] font-medium transition-colors rounded-xl cursor-pointer overflow-hidden ${
                   isActive
-                    ? 'text-[var(--color-brand)] bg-[var(--color-brand-subtle)]'
+                    ? 'text-[var(--color-brand)] font-semibold'
                     : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)]'
                 }`}
               >
-                <Icon className={`w-[18px] h-[18px] ${isActive ? 'text-[var(--color-brand)]' : 'opacity-70'}`} />
-                <span>{tab.label}</span>
+                {isActive && (
+                  <>
+                    <motion.div
+                      layoutId="sidebar-active-pill"
+                      className="absolute inset-0 bg-[var(--color-brand-subtle)] rounded-xl"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                    <motion.div
+                      layoutId="sidebar-active-bar"
+                      className="absolute left-0 top-2 bottom-2 w-1 bg-[var(--color-brand)] rounded-r-full"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  </>
+                )}
+                <Icon className={`relative z-10 w-[18px] h-[18px] transition-transform duration-200 ${isActive ? 'text-[var(--color-brand)] scale-105' : 'opacity-70'}`} />
+                <span className="relative z-10">{tab.label}</span>
               </button>
             );
           })}

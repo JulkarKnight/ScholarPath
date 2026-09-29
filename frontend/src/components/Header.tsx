@@ -1,4 +1,5 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Globe, Moon, Sun, User, Menu } from 'lucide-react';
 
 interface HeaderProps {
@@ -64,10 +65,35 @@ export const Header: React.FC<HeaderProps> = ({
         
         <button
           onClick={toggleTheme}
-          aria-label="Toggle Theme"
-          className="w-9 h-9 rounded-full bg-[var(--color-surface-secondary)] hover:bg-[var(--color-border)] text-[var(--color-text-secondary)] flex items-center justify-center transition-colors border border-[var(--color-border)]"
+          aria-label="Toggle Day/Night Theme"
+          title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          className="w-9 h-9 rounded-full bg-[var(--color-surface-secondary)] hover:bg-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] flex items-center justify-center transition-colors border border-[var(--color-border)] cursor-pointer overflow-hidden relative"
         >
-          {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          <AnimatePresence mode="wait" initial={false}>
+            {isDark ? (
+              <motion.span
+                key="sun"
+                initial={{ rotate: -90, scale: 0, opacity: 0 }}
+                animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                exit={{ rotate: 90, scale: 0, opacity: 0 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="flex items-center justify-center"
+              >
+                <Sun className="w-4 h-4 text-amber-400" />
+              </motion.span>
+            ) : (
+              <motion.span
+                key="moon"
+                initial={{ rotate: 90, scale: 0, opacity: 0 }}
+                animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                exit={{ rotate: -90, scale: 0, opacity: 0 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="flex items-center justify-center"
+              >
+                <Moon className="w-4 h-4" />
+              </motion.span>
+            )}
+          </AnimatePresence>
         </button>
 
         <button 

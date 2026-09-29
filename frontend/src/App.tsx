@@ -1,7 +1,6 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useNavigate } from 'react-router-dom';
-import { MessageSquare } from 'lucide-react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { HeroBanner } from './components/HeroBanner';
@@ -15,26 +14,68 @@ import { CostCalculatorTab } from './components/CostCalculatorTab';
 import { VisaPracticeTab } from './components/VisaPracticeTab';
 import { ChatWidget } from './components/ChatWidget';
 import { UserProfileTab } from './components/UserProfileTab';
-import { ScholarPathLogo } from './components/ScholarPathLogo';
+import { ChatbotLogo } from './components/ChatbotLogo';
+
+const VALID_TABS = new Set([
+  'readiness',
+  'docstudio',
+  'universities',
+  'simplifier',
+  'checklist',
+  'scholarships',
+  'calculator',
+  'visa',
+  'profile',
+]);
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('readiness');
+  const { tab } = useParams<{ tab: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const activeTab = tab && VALID_TABS.has(tab) ? tab : 'readiness';
+
+  const setActiveTab = (newTab: string) => {
+    if (newTab === 'chat') {
+      setIsChatOpen(true);
+      return;
+    }
+    navigate(`/app/${newTab}`);
+  };
+
   const [selectedCountry, setSelectedCountry] = useState<string>('All');
   const [chatInitialMsg, setChatInitialMsg] = useState<string | undefined>(undefined);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('jwt_token');
     if (!token) {
-      navigate('/login');
+      navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`, { replace: true });
+      return;
     }
-  }, [navigate]);
+    if (tab && !VALID_TABS.has(tab)) {
+      navigate('/app/readiness', { replace: true });
+      return;
+    }
+    fetch('/api/profile').then((res) => {
+      if (!res.ok) {
+        localStorage.removeItem('jwt_token');
+        navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`, { replace: true });
+      }
+    }).catch(() => {});
+  }, [navigate, location.pathname, tab]);
 
   const handleNavigateToChat = (msg?: string) => {
     if (msg) setChatInitialMsg(msg);
     setIsChatOpen(true);
+  };
+
+  const handleScrollToForm = () => {
+    const el = document.getElementById('readiness-form-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   const renderActiveTab = () => {
@@ -85,7 +126,7 @@ export default function App() {
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
             {activeTab === 'readiness' && (
               <HeroBanner
-                onStartClick={() => setActiveTab('readiness')}
+                onStartClick={handleScrollToForm}
                 onExploreClick={() => setActiveTab('universities')}
               />
             )}
@@ -106,19 +147,27 @@ export default function App() {
         </main>
       </div>
 
-      {/* Floating AI Mentor Button */}
+      {/* Floating AI Mentor Capsule Button */}
       {!isChatOpen && (
         <motion.button
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileTap={{ scale: 0.96 }}
           onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-40 w-16 h-16 rounded-full bg-[var(--color-brand)] text-white shadow-xl shadow-[var(--color-brand-subtle)] flex flex-col items-center justify-center border-4 border-[var(--color-surface)] group overflow-hidden"
+          className="group fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-40 h-16 max-w-[64px] hover:max-w-[230px] rounded-full bg-gradient-to-r from-[#3B8BFF] to-[#1259E0] text-white shadow-xl shadow-blue-500/25 flex items-center p-1.5 hover:pr-5 border-[3px] border-[var(--color-surface)] transition-all duration-300 ease-out overflow-hidden cursor-pointer"
           title="Open AI Mentor"
         >
-          <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <ScholarPathLogo variant="icon" className="scale-[0.8] mb-0.5" />
+          <div className="w-[46px] h-[46px] rounded-full flex items-center justify-center shrink-0">
+            <ChatbotLogo size={46} />
+          </div>
+          <div className="flex flex-col items-start overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 ml-0 group-hover:ml-2.5 transition-all duration-300 ease-out">
+            <span className="text-[14px] font-bold leading-tight tracking-tight text-white">
+              AI Mentor
+            </span>
+            <span className="text-[11px] font-medium text-white/80 leading-tight">
+              Ask me anything
+            </span>
+          </div>
         </motion.button>
       )}
 
