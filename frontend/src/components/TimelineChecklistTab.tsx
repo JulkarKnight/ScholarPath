@@ -13,6 +13,7 @@ import {
 import { Country, DocumentCheckitem } from '../types';
 import { DEFAULT_DOCUMENT_CHECKLIST } from '../data/dbData';
 import { PrintModal } from './PrintModal';
+import { AiMarkdown } from './AiMarkdown';
 
 interface TimelineChecklistTabProps {
   selectedCountry: string;
@@ -43,9 +44,10 @@ export const TimelineChecklistTab: React.FC<TimelineChecklistTabProps> = ({ sele
   const handleGenerateTimeline = async () => {
     setTimelineLoading(true);
     try {
+      const token = localStorage.getItem('jwt_token');
       const res = await fetch('/api/ai/timeline', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ country: timelineCountry, targetIntake }),
       });
       const data = await res.json();
@@ -124,7 +126,7 @@ export const TimelineChecklistTab: React.FC<TimelineChecklistTabProps> = ({ sele
                   {phase.tasksBn.map((task: string, i: number) => (
                     <li key={i} className="flex items-start gap-1.5">
                       <span className="text-[var(--color-brand)] font-bold">•</span>
-                      <span>{task}</span>
+                      <AiMarkdown className="text-inherit">{task}</AiMarkdown>
                     </li>
                   ))}
                 </ul>

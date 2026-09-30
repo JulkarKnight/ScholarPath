@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
-import { Sidebar } from './components/Sidebar';
+
 import { HeroBanner } from './components/HeroBanner';
 import { ReadinessScoreTab } from './components/ReadinessScoreTab';
 import { DocumentStudioTab } from './components/DocumentStudioTab';
@@ -58,7 +58,9 @@ export default function App() {
       navigate('/app/readiness', { replace: true });
       return;
     }
-    fetch('/api/profile').then((res) => {
+    fetch('/api/profile', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    }).then((res) => {
       if (!res.ok) {
         localStorage.removeItem('jwt_token');
         navigate(`/login?redirect=${encodeURIComponent(location.pathname)}`, { replace: true });
@@ -104,48 +106,39 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] font-sans overflow-hidden relative">
+    <div className="flex flex-col h-screen bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] font-sans overflow-hidden relative">
       
-      <Sidebar 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
-        isOpen={isSidebarOpen} 
-        setIsOpen={setIsSidebarOpen} 
+      <Header
+        selectedCountry={selectedCountry}
+        setSelectedCountry={setSelectedCountry}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onMenuClick={() => setIsSidebarOpen(true)}
       />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-        <Header
-          selectedCountry={selectedCountry}
-          setSelectedCountry={setSelectedCountry}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          onMenuClick={() => setIsSidebarOpen(true)}
-        />
+      <main className="flex-1 overflow-y-auto scrollbar-thin">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+          {activeTab === 'readiness' && (
+            <HeroBanner
+              onStartClick={handleScrollToForm}
+              onExploreClick={() => setActiveTab('universities')}
+            />
+          )}
 
-        <main className="flex-1 overflow-y-auto scrollbar-thin">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-            {activeTab === 'readiness' && (
-              <HeroBanner
-                onStartClick={handleScrollToForm}
-                onExploreClick={() => setActiveTab('universities')}
-              />
-            )}
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-                className="w-full min-h-[500px]"
-              >
-                {renderActiveTab()}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </main>
-      </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+              className="w-full min-h-[500px]"
+            >
+              {renderActiveTab()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </main>
 
       {/* Floating AI Mentor Capsule Button */}
       {!isChatOpen && (

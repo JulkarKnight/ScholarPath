@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles, User, Bot, RefreshCw, X, MessageSquare } from 'lucide-react';
 import { ChatMessage } from '../types';
 import { ChatbotLogo } from './ChatbotLogo';
+import { AiMarkdown } from './AiMarkdown';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface ChatWidgetProps {
@@ -23,9 +24,11 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ initialPrompt, isOpen, o
   const [input, setInput] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const sentInitialPromptRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (initialPrompt && isOpen) {
+    if (initialPrompt && isOpen && sentInitialPromptRef.current !== initialPrompt) {
+      sentInitialPromptRef.current = initialPrompt;
       handleSendMessage(initialPrompt);
     }
   }, [initialPrompt, isOpen]);
@@ -49,10 +52,15 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ initialPrompt, isOpen, o
     setLoading(true);
 
     try {
+      const token = localStorage.getItem('jwt_token');
+      // Send full conversation history so AI has context/memory
+      const chatHistory = messages
+        .filter(m => m.id !== 'm-1') // skip the initial greeting
+        .map(m => ({ sender: m.sender, text: m.text }));
       const res = await fetch('/api/ai/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text }),
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ message: text, chatHistory }),
       });
       const data = await res.json();
       
@@ -139,7 +147,11 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ initialPrompt, isOpen, o
                   : 'bg-[var(--color-surface-secondary)] border border-[var(--color-border)] text-[var(--color-text-primary)] rounded-2xl rounded-bl-sm'
               }`}
             >
-              <p>{m.text}</p>
+              {m.sender === 'assistant' ? (
+                <AiMarkdown className="text-inherit">{m.text}</AiMarkdown>
+              ) : (
+                <p>{m.text}</p>
+              )}
               <span className={`text-[10px] block font-medium ${m.sender === 'user' ? 'text-white/70 text-right' : 'text-[var(--color-text-tertiary)]'}`}>
                 {m.timestamp}
               </span>

@@ -16,6 +16,10 @@ export default defineConfig(() => {
         '/api': {
           target: 'http://localhost:8080',
           changeOrigin: true
+        },
+        '/oauth2': {
+          target: 'http://localhost:8080',
+          changeOrigin: true
         }
       },
       // HMR is disabled in AI Studio via DISABLE_HMR env var.

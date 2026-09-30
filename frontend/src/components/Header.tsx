@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Globe, Moon, Sun, User, Menu } from 'lucide-react';
+import { Globe, Moon, Sun, User, Menu, BarChart3, FileCheck, Compass, FileText, ListChecks, Award, Calculator, Video, LogOut } from 'lucide-react';
+import { ScholarPathLogo } from './ScholarPathLogo';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   selectedCountry: string;
@@ -17,8 +19,25 @@ export const Header: React.FC<HeaderProps> = ({
   setActiveTab,
   onMenuClick
 }) => {
+  const navigate = useNavigate();
   const countries = ['All', 'Canada', 'Germany', 'USA', 'UK', 'Australia', 'Finland', 'Sweden'];
   const [isDark, setIsDark] = useState(false);
+
+  const tabs = [
+    { id: 'readiness', label: 'Dashboard', icon: BarChart3 },
+    { id: 'docstudio', label: 'Documents', icon: FileCheck },
+    { id: 'universities', label: 'Universities', icon: Compass },
+    { id: 'simplifier', label: 'Simplifier', icon: FileText },
+    { id: 'checklist', label: 'Timeline', icon: ListChecks },
+    { id: 'scholarships', label: 'Scholarships', icon: Award },
+    { id: 'calculator', label: 'Calculator', icon: Calculator },
+    { id: 'visa', label: 'Visa Prep', icon: Video },
+  ];
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt_token');
+    navigate('/');
+  };
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains('dark'));
@@ -45,7 +64,32 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
       </div>
 
-      <div className="flex-1"></div>
+      <div className="hidden lg:flex items-center h-full cursor-pointer pr-8 border-r border-[var(--color-border)] mr-6" onClick={() => setActiveTab('readiness')}>
+        <ScholarPathLogo variant="full" className="scale-[0.85] origin-left" />
+      </div>
+
+      <div className="hidden lg:flex flex-1 items-center gap-2 overflow-x-auto scrollbar-none h-full">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`relative flex items-center gap-2 px-3 h-[42px] text-[13px] font-medium transition-colors rounded-lg cursor-pointer whitespace-nowrap ${
+                isActive
+                  ? 'text-[var(--color-brand)] bg-[var(--color-brand-subtle)] font-semibold'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)]'
+              }`}
+            >
+              <Icon className={`w-[16px] h-[16px] transition-transform duration-200 ${isActive ? 'text-[var(--color-brand)]' : 'opacity-70'}`} />
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="flex-1 lg:hidden"></div>
 
       <div className="flex items-center gap-3 shrink-0">
         <div className="flex items-center gap-2 bg-[var(--color-surface-secondary)] border border-[var(--color-border)] rounded-lg px-3 py-1.5 transition-all hidden sm:flex">
@@ -102,6 +146,15 @@ export const Header: React.FC<HeaderProps> = ({
           className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors border border-[var(--color-border)] ${activeTab === 'profile' ? 'bg-[var(--color-brand)] text-white' : 'bg-[var(--color-surface-secondary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-border)]'}`}
         >
           <User className="w-4 h-4" />
+        </button>
+
+        <button 
+          onClick={handleLogout}
+          aria-label="Sign Out"
+          title="Sign Out"
+          className="w-9 h-9 rounded-full flex items-center justify-center transition-colors border border-[var(--color-border)] bg-[var(--color-surface-secondary)] text-[var(--color-danger)] hover:bg-[var(--color-danger)]/10"
+        >
+          <LogOut className="w-4 h-4" />
         </button>
       </div>
     </header>

@@ -21,12 +21,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onStartClick, onExploreC
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
         <div className="lg:col-span-7 space-y-5">
-          <div className="flex items-center gap-2">
-            <span className="sp-badge bg-[var(--color-brand)]/[0.08] text-[var(--color-brand)] border border-[#0066FF]/[0.12]">
-              <Sparkles className="w-3 h-3" />
-              AI-Powered Platform
-            </span>
-          </div>
+
 
           <h1 className="text-[28px] sm:text-[34px] font-bold text-[var(--color-text-primary)] leading-[1.2] tracking-[-0.02em]">
             Your complete toolkit for

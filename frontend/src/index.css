@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
 
@@ -68,7 +68,7 @@
 
 @layer base {
   html {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', 'Noto Sans Bengali', system-ui, -apple-system, sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text-primary);
     scroll-behavior: smooth;
@@ -135,5 +135,9 @@
     outline: none;
     border-color: var(--color-brand);
     box-shadow: 0 0 0 3px var(--color-brand-subtle);
+  }
+
+  .sp-badge {
+    @apply inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-full font-medium text-[11px] whitespace-nowrap;
   }
 }

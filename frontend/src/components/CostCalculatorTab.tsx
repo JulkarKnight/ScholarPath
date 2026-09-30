@@ -56,6 +56,10 @@ export const CostCalculatorTab: React.FC = () => {
                   if (c === 'Germany') { setTuitionPerYear(2500); setLivingPerYear(11000); }
                   else if (c === 'USA') { setTuitionPerYear(35000); setLivingPerYear(14000); }
                   else if (c === 'Canada') { setTuitionPerYear(28000); setLivingPerYear(12000); }
+                  else if (c === 'UK') { setTuitionPerYear(20000); setLivingPerYear(15000); }
+                  else if (c === 'Australia') { setTuitionPerYear(25000); setLivingPerYear(16000); }
+                  else if (c === 'Finland') { setTuitionPerYear(12000); setLivingPerYear(10000); }
+                  else if (c === 'Sweden') { setTuitionPerYear(15000); setLivingPerYear(11000); }
                 }}
                 className="sp-input cursor-pointer"
               >

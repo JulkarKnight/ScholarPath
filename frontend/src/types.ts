@@ -30,7 +30,7 @@ export interface Scholarship {
   id: string;
   title: string;
   country: Country;
-  coverage: 'Full Funding' | 'Partial Tuition' | 'Monthly Stipel' | 'Tuition Waiver';
+  coverage: 'Full Funding' | 'Partial Tuition' | 'Monthly Stipend' | 'Tuition Waiver';
   degreeLevels: ('Bachelors' | 'Masters' | 'PhD')[];
   minCgpa: number;
   deadline: string;

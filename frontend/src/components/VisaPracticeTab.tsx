@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Country, VisaInterviewQuestion, VisaEvaluationResponse } from '../types';
 import { VISA_QUESTIONS_SAMPLE } from '../data/dbData';
+import { AiMarkdown } from './AiMarkdown';
 
 interface VisaPracticeTabProps {
   selectedCountry: string;
@@ -72,9 +73,10 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
     setError(null);
 
     try {
+      const token = localStorage.getItem('jwt_token');
       const res = await fetch('/api/ai/visa-practice', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ country, questionText: activeQuestion.questionText, studentAnswer }),
       });
       if (!res.ok) { const data = await res.json(); throw new Error(data.error || 'Evaluation failed'); }
@@ -155,6 +157,8 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
                 <option value="USA">USA Embassy</option>
                 <option value="Canada">Canada HC</option>
                 <option value="Germany">German Embassy</option>
+                <option value="UK">UK Embassy</option>
+                <option value="Australia">Australia HC</option>
               </select>
             </div>
 
@@ -296,10 +300,7 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
           {evaluation && !loading && (
             <div className="sp-card-elevated p-6 space-y-5">
               <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
-                <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12]">
-                  <Sparkles className="w-3 h-3" />
-                  Report Card
-                </span>
+                <div></div>
                 <span className="text-[12px] text-[#9CA3AF]">{country}</span>
               </div>
 
@@ -323,7 +324,7 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
               {/* Feedback */}
               <div className="bg-[var(--color-surface-secondary)] p-4 rounded-xl border border-black/[0.04] space-y-1.5">
                 <span className="font-semibold text-[12px] text-[var(--color-brand)] block">ফিডব্যাক</span>
-                <p className="text-[12px] text-[var(--color-text-secondary)] leading-relaxed">{evaluation.feedbackBn}</p>
+                <AiMarkdown className="text-[12px] text-[var(--color-text-secondary)] leading-relaxed">{evaluation.feedbackBn}</AiMarkdown>
               </div>
 
               {/* Better Answer */}
@@ -337,7 +338,7 @@ export const VisaPracticeTab: React.FC<VisaPracticeTabProps> = ({ selectedCountr
                 <span className="font-semibold text-[12px] text-[var(--color-text-primary)] block">জরুরি টিপস</span>
                 <ul className="space-y-1 text-[var(--color-text-secondary)] text-[11px] list-disc pl-4">
                   {evaluation.keyAdvicePointsBn.map((tip, i) => (
-                    <li key={i}>{tip}</li>
+                    <li key={i}><AiMarkdown className="inline">{tip}</AiMarkdown></li>
                   ))}
                 </ul>
               </div>

@@ -22,7 +22,9 @@ export const LandingPage: React.FC = () => {
       setIsLoggedIn(false);
       return;
     }
-    fetch('/api/profile')
+    fetch('/api/profile', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
       .then((res) => {
         if (res.ok) {
           setIsLoggedIn(true);

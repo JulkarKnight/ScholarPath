@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Country, DocumentAuditResponse, DocumentAuditField } from '../types';
 import { PrintModal } from './PrintModal';
+import { AiMarkdown } from './AiMarkdown';
 
 interface DocumentStudioTabProps {
   selectedCountry: string;
@@ -128,9 +129,10 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
     setLoading(true);
     setError(null);
     try {
+      const token = localStorage.getItem('jwt_token');
       const response = await fetch('/api/ai/document-audit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({
           targetCountry,
           targetDegree,
@@ -139,12 +141,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
           cvInfo,
           sopInfo,
           languageInfo,
-          lorInfo,
-          transcriptFile,
-          cvFile,
-          sopFile,
-          languageFile,
-          lorFile
+          lorInfo
         }),
       });
 
@@ -213,10 +210,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
         <div className="absolute -right-24 -top-24 w-96 h-96 bg-[var(--color-brand)]/[0.06] rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="p-8 relative z-10 max-w-3xl space-y-3">
-          <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12] uppercase tracking-wider text-[10px]">
-            <Sparkles className="w-3.5 h-3.5" />
-            AI Document Studio
-          </span>
+
           <h2 className="text-[24px] sm:text-[28px] font-semibold text-[var(--color-text-primary)] tracking-[-0.02em] leading-tight">
             Analyze Application Docs & Extract Formatted PDFs
           </h2>
@@ -390,9 +384,9 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
                 Evaluation Complete
               </span>
               <h3 className="text-[20px] font-semibold text-[var(--color-text-primary)]">Overall Document Readiness</h3>
-              <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed max-w-xl">
-                "{auditResult.summaryVerdictBn}"
-              </p>
+              <div className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed max-w-xl">
+                <AiMarkdown>{auditResult.summaryVerdictBn}</AiMarkdown>
+              </div>
             </div>
 
             <div className="flex flex-col items-center gap-4 shrink-0">
@@ -478,7 +472,7 @@ export const DocumentStudioTab: React.FC<DocumentStudioTabProps> = ({ selectedCo
                           {fieldData.actionableSuggestionsBn.map((sug, idx) => (
                             <li key={idx} className="flex items-start gap-1.5">
                               <span className="text-[var(--color-brand)] font-bold">•</span>
-                              <span>{sug}</span>
+                              <AiMarkdown className="text-inherit">{sug}</AiMarkdown>
                             </li>
                           ))}
                         </ul>

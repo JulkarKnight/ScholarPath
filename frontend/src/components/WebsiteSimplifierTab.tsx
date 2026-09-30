@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FileText, Sparkles, RefreshCw, CircleCheck, Clock, Lightbulb, Copy, Check } from 'lucide-react';
 import { SimplifierResponse } from '../types';
+import { AiMarkdown } from './AiMarkdown';
 
 export const WebsiteSimplifierTab: React.FC = () => {
   const [rawText, setRawText] = useState<string>(
@@ -34,9 +35,10 @@ export const WebsiteSimplifierTab: React.FC = () => {
     setError(null);
 
     try {
+      const token = localStorage.getItem('jwt_token');
       const res = await fetch('/api/ai/simplify', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ rawText, targetCountry }),
       });
 
@@ -176,10 +178,7 @@ export const WebsiteSimplifierTab: React.FC = () => {
             <div className="sp-card-elevated p-6 space-y-5">
               {/* Top Bar */}
               <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
-                <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12]">
-                  <Sparkles className="w-3 h-3" />
-                  AI Output
-                </span>
+                <div></div>
                 <button
                   onClick={handleCopy}
                   className="sp-btn sp-btn-ghost text-[12px] border border-[var(--color-border)]"
@@ -208,9 +207,9 @@ export const WebsiteSimplifierTab: React.FC = () => {
               {/* Simplified Explanation */}
               <div>
                 <h4 className="font-semibold text-[13px] text-[var(--color-text-primary)] mb-2">সহজ বাংলা ব্যাখ্যা</h4>
-                <p className="text-[12px] text-[var(--color-text-secondary)] bg-[var(--color-surface-secondary)] border border-black/[0.04] p-4 rounded-xl leading-relaxed">
+                <AiMarkdown className="text-[12px] text-[var(--color-text-secondary)] bg-[var(--color-surface-secondary)] border border-black/[0.04] p-4 rounded-xl leading-relaxed">
                   {result.simplifiedBn}
-                </p>
+                </AiMarkdown>
               </div>
 
               {/* Deadlines */}

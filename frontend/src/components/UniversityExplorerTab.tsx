@@ -239,9 +239,7 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
           <div className="sp-card-elevated max-w-2xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between pb-4 border-b border-[var(--color-border)]">
               <div>
-                <span className="sp-badge bg-[var(--color-brand)]/[0.06] text-[var(--color-brand)] border border-[#0066FF]/[0.12] text-[10px]">
-                  AI Deep-Dive
-                </span>
+
                 <h3 className="text-[18px] font-semibold text-[var(--color-text-primary)] mt-1.5">{selectedUniForAi.name}</h3>
                 <p className="text-[12px] text-[#9CA3AF]">
                   {selectedUniForAi.city}, {selectedUniForAi.country}

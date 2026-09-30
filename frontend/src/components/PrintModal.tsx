@@ -63,7 +63,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({
               <div>
                 <div className="flex items-center gap-2 text-slate-900 font-black text-lg">
                   <GraduationCap className="w-6 h-6 text-green-700" />
-                  <span>SHIKKHARTHO AI (শিক্ষার্থী এআই)</span>
+                  <span>ScholarPath AI</span>
                 </div>
                 <p className="text-xs text-slate-600 font-semibold mt-0.5">
                   Official Study Abroad Application & Guidance Report

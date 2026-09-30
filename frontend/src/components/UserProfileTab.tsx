@@ -29,7 +29,10 @@ export const UserProfileTab: React.FC = () => {
   const fetchProfile = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/profile');
+      const token = localStorage.getItem('jwt_token');
+      const res = await fetch('/api/profile', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       if (res.ok) {
         const data = await res.json();
         if (data.email) setEmail(data.email);
@@ -54,9 +57,10 @@ export const UserProfileTab: React.FC = () => {
     e.preventDefault();
     setSaving(true);
     try {
+      const token2 = localStorage.getItem('jwt_token');
       await fetch('/api/profile', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token2}` },
         body: JSON.stringify({ 
           fullName, 
           bio, 

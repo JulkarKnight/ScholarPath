@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { Country, ApplicationReadinessResponse } from '../types';
 import { PrintModal } from './PrintModal';
+import { AiMarkdown } from './AiMarkdown';
 
 interface ReadinessScoreTabProps {
   selectedCountry: string;
@@ -77,9 +78,10 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
     setError(null);
 
     try {
+      const token = localStorage.getItem('jwt_token');
       const res = await fetch('/api/ai/readiness', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({
           cgpa,
           cgpaScale,
@@ -120,68 +122,23 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
           Your application journey is <span className="font-bold text-[var(--color-brand)]">68%</span> complete.
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-8">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -3 }}
             transition={{ duration: 0.25, delay: 0 }}
-            className="sp-card p-5 cursor-pointer"
+            className="sp-card p-5 cursor-pointer max-w-sm"
             onClick={() => {
               const el = document.getElementById('readiness-form-section');
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Readiness</span>
+              <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Readiness Score</span>
               <BarChart className="w-5 h-5 text-[var(--color-brand)] opacity-80" />
             </div>
-            <div className="text-[28px] font-bold text-[var(--color-text-primary)]">{result ? `${result.overallScorePercent}%` : '82%'}</div>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -3 }}
-            transition={{ duration: 0.25, delay: 0.07 }}
-            className="sp-card p-5 cursor-pointer"
-            onClick={() => onNavigateToTab('docstudio')}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Documents</span>
-              <FileCheck className="w-5 h-5 text-[var(--color-brand)] opacity-80" />
-            </div>
-            <div className="text-[28px] font-bold text-[var(--color-text-primary)]">7 <span className="text-[18px] text-[var(--color-text-tertiary)]">/ 9</span></div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -3 }}
-            transition={{ duration: 0.25, delay: 0.14 }}
-            className="sp-card p-5 cursor-pointer"
-            onClick={() => onNavigateToTab('universities')}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Matches</span>
-              <Compass className="w-5 h-5 text-[var(--color-brand)] opacity-80" />
-            </div>
-            <div className="text-[28px] font-bold text-[var(--color-text-primary)]">14</div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -3 }}
-            transition={{ duration: 0.25, delay: 0.21 }}
-            className="sp-card p-5 cursor-pointer"
-            onClick={() => onNavigateToTab('checklist')}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Next Deadline</span>
-              <Clock className="w-5 h-5 text-[var(--color-warning)] opacity-80" />
-            </div>
-            <div className="text-[28px] font-bold text-[var(--color-text-primary)]">18 <span className="text-[18px] text-[var(--color-text-tertiary)]">days</span></div>
+            <div className="text-[28px] font-bold text-[var(--color-text-primary)]">{result ? `${result.overallScorePercent}%` : '--'}</div>
           </motion.div>
         </div>
       </div>
@@ -413,7 +370,7 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
                       Mentor Verdict (Bangla)
                     </h3>
                     <div className="bg-[var(--color-surface-secondary)] border border-[var(--color-border)] p-5 rounded-xl">
-                      <p className="text-[var(--color-text-primary)] leading-relaxed text-[15px]">{result.mentorSummaryBn}</p>
+                      <AiMarkdown className="text-[var(--color-text-primary)] leading-relaxed text-[15px]">{result.mentorSummaryBn}</AiMarkdown>
                     </div>
                   </div>
 
