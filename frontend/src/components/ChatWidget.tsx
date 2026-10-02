@@ -100,7 +100,7 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ initialPrompt, isOpen, o
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 20, scale: 0.95 }}
       transition={{ duration: 0.2 }}
-      className="fixed bottom-24 right-6 sm:right-8 z-50 w-[calc(100vw-32px)] sm:w-[400px] h-[600px] max-h-[calc(100vh-120px)] shadow-2xl rounded-2xl overflow-hidden flex flex-col bg-[var(--color-surface)] border border-[var(--color-border)]"
+      className="fixed bottom-20 right-4 sm:right-8 z-50 w-[calc(100vw-32px)] sm:w-[450px] h-[calc(100vh-140px)] sm:h-[750px] max-h-[850px] shadow-2xl rounded-2xl overflow-hidden flex flex-col bg-[var(--color-surface)] border border-[var(--color-border)]"
     >
       {/* Chat Header */}
       <div className="px-5 py-4 border-b border-[var(--color-border)] flex items-center justify-between bg-gradient-to-r from-[var(--color-surface)] to-[var(--color-surface-secondary)]">
@@ -174,19 +174,21 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ initialPrompt, isOpen, o
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Quick Chips */}
-      <div className="px-5 py-3 border-t border-[var(--color-border)] flex items-center gap-2 overflow-x-auto scrollbar-none bg-[var(--color-surface-secondary)]/50">
-        <span className="text-[11px] text-[var(--color-text-tertiary)] font-bold shrink-0 uppercase tracking-wider">Suggest:</span>
-        {quickChips.map((chip, idx) => (
-          <button
-            key={idx}
-            onClick={() => handleSendMessage(chip)}
-            className="sp-btn sp-btn-ghost text-[12px] px-3 py-1.5 shrink-0 whitespace-nowrap rounded-full border border-[var(--color-border)] hover:border-[var(--color-brand-muted)] text-[var(--color-text-secondary)] bg-[var(--color-surface)] shadow-sm"
-          >
-            {chip}
-          </button>
-        ))}
-      </div>
+      {/* Quick Chips - Hidden after first interaction to reclaim space */}
+      {messages.length <= 1 && (
+        <div className="px-5 py-3 border-t border-[var(--color-border)] flex flex-wrap items-center gap-2 bg-[var(--color-surface-secondary)]/50">
+          <span className="text-[11px] text-[var(--color-text-tertiary)] font-bold shrink-0 uppercase tracking-wider">Suggest:</span>
+          {quickChips.map((chip, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleSendMessage(chip)}
+              className="sp-btn sp-btn-ghost text-[12px] px-3 py-1.5 text-left rounded-2xl border border-[var(--color-border)] hover:border-[var(--color-brand-muted)] text-[var(--color-text-secondary)] bg-[var(--color-surface)] shadow-sm"
+            >
+              {chip}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Input Bar */}
       <form

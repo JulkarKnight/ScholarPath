@@ -118,29 +118,6 @@ export const ReadinessScoreTab: React.FC<ReadinessScoreTabProps> = ({
         <h1 className="text-[32px] sm:text-[40px] font-extrabold text-[var(--color-text-primary)] tracking-tight">
           {greeting}, Student.
         </h1>
-        <p className="text-[var(--color-text-secondary)] text-[16px] mt-2">
-          Your application journey is <span className="font-bold text-[var(--color-brand)]">68%</span> complete.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mt-8">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -3 }}
-            transition={{ duration: 0.25, delay: 0 }}
-            className="sp-card p-5 cursor-pointer max-w-sm"
-            onClick={() => {
-              const el = document.getElementById('readiness-form-section');
-              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[var(--color-text-secondary)] text-[13px] font-medium uppercase tracking-wider">Readiness Score</span>
-              <BarChart className="w-5 h-5 text-[var(--color-brand)] opacity-80" />
-            </div>
-            <div className="text-[28px] font-bold text-[var(--color-text-primary)]">{result ? `${result.overallScorePercent}%` : '--'}</div>
-          </motion.div>
-        </div>
       </div>
 
       <div id="readiness-form-section" className="flex items-center justify-between scroll-mt-6">

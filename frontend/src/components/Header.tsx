@@ -20,7 +20,6 @@ export const Header: React.FC<HeaderProps> = ({
   onMenuClick
 }) => {
   const navigate = useNavigate();
-  const countries = ['All', 'Canada', 'Germany', 'USA', 'UK', 'Australia', 'Finland', 'Sweden'];
   const [isDark, setIsDark] = useState(false);
 
   const tabs = [
@@ -92,20 +91,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="flex-1 lg:hidden"></div>
 
       <div className="flex items-center gap-3 shrink-0">
-        <div className="flex items-center gap-2 bg-[var(--color-surface-secondary)] border border-[var(--color-border)] rounded-lg px-3 py-1.5 transition-all hidden sm:flex">
-          <Globe className="w-4 h-4 text-[var(--color-text-secondary)]" />
-          <select
-            value={selectedCountry}
-            onChange={(e) => setSelectedCountry(e.target.value)}
-            className="bg-transparent text-[var(--color-text-primary)] text-[13px] font-medium focus:outline-none cursor-pointer appearance-none pr-1"
-          >
-            {countries.map((c) => (
-              <option key={c} value={c} className="bg-[var(--color-surface)] text-[var(--color-text-primary)]">
-                {c === 'All' ? 'All Regions' : c}
-              </option>
-            ))}
-          </select>
-        </div>
+
         
         <button
           onClick={toggleTheme}

@@ -7,6 +7,8 @@ import { ScholarPathLogo } from '../ScholarPathLogo';
 export const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
+  const [otpRequired, setOtpRequired] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -20,19 +22,41 @@ export const Login: React.FC = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
+      if (otpRequired) {
+        const res = await fetch('/api/auth/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, otp })
+        });
+        
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Invalid OTP');
+        }
 
-      if (!res.ok) {
-        throw new Error('Invalid credentials');
+        const data = await res.json();
+        localStorage.setItem('jwt_token', data.token);
+        navigate(redirectPath, { replace: true });
+      } else {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || 'Invalid credentials');
+        }
+
+        const data = await res.json();
+        if (data.otpRequired) {
+          setOtpRequired(true);
+        } else {
+          localStorage.setItem('jwt_token', data.token);
+          navigate(redirectPath, { replace: true });
+        }
       }
-
-      const data = await res.json();
-      localStorage.setItem('jwt_token', data.token);
-      navigate(redirectPath, { replace: true });
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -100,39 +124,63 @@ export const Login: React.FC = () => {
                 {error}
               </div>
             )}
-            <div>
-              <label className="sp-label">Username</label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-[var(--color-text-tertiary)]" />
+            {otpRequired ? (
+              <div>
+                <label className="sp-label">One-Time Password (OTP)</label>
+                <div className="mt-1 relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className="h-5 w-5 text-[var(--color-text-tertiary)]" />
+                  </div>
+                  <input
+                    type="text"
+                    required
+                    className="sp-input !pl-10"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="Enter 6-digit OTP"
+                  />
                 </div>
-                <input
-                  type="text"
-                  required
-                  className="sp-input !pl-10"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="johndoe"
-                />
+                <p className="mt-2 text-xs text-[var(--color-text-secondary)] text-center">
+                  Please check the server console for your OTP.
+                </p>
               </div>
-            </div>
+            ) : (
+              <>
+                <div>
+                  <label className="sp-label">Username</label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <User className="h-5 w-5 text-[var(--color-text-tertiary)]" />
+                    </div>
+                    <input
+                      type="text"
+                      required
+                      className="sp-input !pl-10"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="johndoe"
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label className="sp-label">Password</label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-[var(--color-text-tertiary)]" />
+                <div>
+                  <label className="sp-label">Password</label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Lock className="h-5 w-5 text-[var(--color-text-tertiary)]" />
+                    </div>
+                    <input
+                      type="password"
+                      required
+                      className="sp-input !pl-10"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••"
+                    />
+                  </div>
                 </div>
-                <input
-                  type="password"
-                  required
-                  className="sp-input !pl-10"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                />
-              </div>
-            </div>
+              </>
+            )}
 
             <div>
               <button
@@ -140,10 +188,26 @@ export const Login: React.FC = () => {
                 disabled={loading}
                 className="sp-btn sp-btn-primary w-full flex justify-center py-2.5"
               >
-                {loading ? 'Signing in...' : 'Sign in'}
+                {loading ? 'Processing...' : (otpRequired ? 'Verify OTP' : 'Sign in')}
                 {!loading && <ArrowRight className="w-4 h-4" />}
               </button>
             </div>
+            
+            {otpRequired && (
+              <div className="text-center mt-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOtpRequired(false);
+                    setOtp('');
+                    setError('');
+                  }}
+                  className="text-sm font-medium text-[var(--color-brand)] hover:text-[var(--color-brand-hover)]"
+                >
+                  Back to login
+                </button>
+              </div>
+            )}
           </form>
 
           <div className="mt-6">

@@ -11,7 +11,7 @@ export const OAuth2RedirectHandler: React.FC = () => {
     
     if (token) {
       localStorage.setItem('jwt_token', token);
-      navigate('/app/profile', { replace: true });
+      navigate('/app/readiness', { replace: true });
     } else {
       navigate('/login', { replace: true });
     }

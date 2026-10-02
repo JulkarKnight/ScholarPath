@@ -150,7 +150,7 @@ export const UserProfileTab: React.FC = () => {
                   <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="sp-input" placeholder="Enter your full name" />
                 </div>
                 <div>
-                  <label className="sp-label">Email (from Google)</label>
+                  <label className="sp-label">Email Address</label>
                   <input type="email" value={email} readOnly className="sp-input opacity-70 cursor-not-allowed bg-[var(--color-surface-secondary)]" />
                 </div>
               </div>

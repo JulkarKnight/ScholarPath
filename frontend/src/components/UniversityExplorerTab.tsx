@@ -40,7 +40,6 @@ export const UniversityExplorerTab: React.FC<UniversityExplorerTabProps> = ({
       if (selectedCountry !== 'All') params.append('country', selectedCountry);
       if (searchQuery) params.append('search', searchQuery);
       if (maxTuition < 50000) params.append('maxTuition', maxTuition.toString());
-      if (minCgpaFilter > 2.0) params.append('minCgpa', minCgpaFilter.toString());
 
       const res = await fetch(`/api/universities?${params.toString()}`);
       const data = await res.json();

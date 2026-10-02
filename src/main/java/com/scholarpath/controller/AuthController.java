@@ -33,7 +33,12 @@ public class AuthController {
     @Autowired
     private com.scholarpath.repository.UserProfileRepository userProfileRepository;
 
+    @Autowired
+    private com.scholarpath.service.EmailService emailService;
+
     private static final java.io.File USERS_FILE = new java.io.File("users-store.properties");
+
+    private final java.util.concurrent.ConcurrentHashMap<String, String> otpStorage = new java.util.concurrent.ConcurrentHashMap<>();
 
     @javax.annotation.PostConstruct
     public void initUsers() {
@@ -123,9 +128,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.get("username"), request.get("password"))
+                    new UsernamePasswordAuthenticationToken(username, request.get("password"))
             );
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
@@ -133,11 +139,65 @@ public class AuthController {
             return ResponseEntity.badRequest().body(error);
         }
 
-        final UserDetails userDetails = userDetailsManager.loadUserByUsername(request.get("username"));
-        final String jwt = jwtUtil.generateToken(userDetails);
+        // Generate OTP
+        String otp = String.format("%06d", new java.util.Random().nextInt(999999));
+        otpStorage.put(username, otp);
+        
+        System.out.println("\n==============================================");
+        System.out.println("OTP for user " + username + " is: " + otp);
+        System.out.println("==============================================\n");
 
-        Map<String, String> response = new HashMap<>();
-        response.put("token", jwt);
+        // Send OTP via Email
+        String emailTo = null;
+        java.util.Optional<com.scholarpath.entity.UserProfile> profileOpt = userProfileRepository.findByFullName(username);
+        if (profileOpt.isPresent() && profileOpt.get().getEmail() != null && !profileOpt.get().getEmail().endsWith("@local.dev")) {
+            emailTo = profileOpt.get().getEmail();
+        } else {
+            java.util.Properties props = new java.util.Properties();
+            if (USERS_FILE.exists()) {
+                try (java.io.FileInputStream fis = new java.io.FileInputStream(USERS_FILE)) {
+                    props.load(fis);
+                    emailTo = props.getProperty(username + ".email");
+                } catch (Exception ignored) {}
+            }
+        }
+        
+        if (emailTo != null && !emailTo.isEmpty() && !emailTo.endsWith("@local.dev")) {
+            emailService.sendOtpEmail(emailTo, otp);
+        } else {
+            System.out.println("No valid email address found for user. OTP is only printed in the console.");
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("otpRequired", true);
+        response.put("message", "OTP has been sent to your registered email.");
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String otp = request.get("otp");
+        
+        if (username == null || otp == null) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Username and OTP are required");
+            return ResponseEntity.badRequest().body(error);
+        }
+        
+        String storedOtp = otpStorage.get(username);
+        if (storedOtp != null && storedOtp.equals(otp)) {
+            otpStorage.remove(username); // Consume OTP
+            final UserDetails userDetails = userDetailsManager.loadUserByUsername(username);
+            final String jwt = jwtUtil.generateToken(userDetails);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("token", jwt);
+            return ResponseEntity.ok(response);
+        }
+        
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "Invalid or expired OTP");
+        return ResponseEntity.badRequest().body(error);
     }
 }
